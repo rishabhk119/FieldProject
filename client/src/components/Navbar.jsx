@@ -36,7 +36,7 @@ export default function Navbar() {
         <div className="navbar-inner">
           {/* Logo */}
           <Link to="/" className="navbar-logo">
-            <div className="logo-icon">🪷</div>
+            <img src="/logo.png" alt="Sai Tapovan Logo" style={{ width: 42, height: 42, objectFit: 'contain', filter: 'drop-shadow(0 0 10px rgba(249, 115, 22, 0.5))' }} />
             <div className="logo-text-block">
               <span className="logo-title">SAI TAPOVAN</span>
               <span className="logo-subtitle">Ashram · Est. 1995</span>

@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getDashboardStats, getRecentActivity } from '../api/dashboard.api'
+import Loader from '../components/Loader'
+import DashboardSidebar from '../components/DashboardSidebar'
+import DashboardTopbar from '../components/DashboardTopbar'
 import '../styles/dashboard.css'
 
 const ROLE_CONFIG = {
@@ -49,6 +52,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchDashboardData = async () => {
+      // Role Based Access: Only admins fetch site-wide stats
+      if (user?.role !== 'admin') {
+        setLoading(false)
+        return
+      }
+
       try {
         const [statsRes, activityRes] = await Promise.all([
           getDashboardStats(),
@@ -65,7 +74,7 @@ export default function Dashboard() {
     }
     
     fetchDashboardData()
-  }, [])
+  }, [user])
 
   const handleLogout = () => {
     logout()
@@ -116,79 +125,30 @@ export default function Dashboard() {
     { icon: '📖', label: 'Programs', action: () => navigate('/programs') },
   ]
 
+  if (loading) {
+    return <Loader fullScreen={true} text="Awakening Dashboard..." />
+  }
+
   return (
     <div className="dashboard-layout">
       {/* ── Sidebar ──────────────────────────────────── */}
-      <aside className="dash-sidebar">
-        <div className="sidebar-header">
-          <Link to="/" className="sidebar-brand" style={{ textDecoration: 'none' }}>
-            <div className="sidebar-brand-icon">🪷</div>
-            <div>
-              <div className="sidebar-brand-name">SAI TAPOVAN</div>
-              <div className="sidebar-brand-sub">Ashram Portal</div>
-            </div>
-          </Link>
-
-          <div className="sidebar-user">
-            <div className="sidebar-avatar">
-              {user?.name?.[0]?.toUpperCase() ?? '?'}
-            </div>
-            <div style={{ overflow: 'hidden', flex: 1 }}>
-              <div className="sidebar-username">{user?.name}</div>
-              <span
-                className="dash-role-badge"
-                style={{ background: role.bg, color: role.color }}
-              >
-                {role.label}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <nav className="sidebar-nav">
-          {NAV_SECTIONS.map(({ label, links }) => (
-            <div key={label}>
-              <div className="sidebar-section-label">{label}</div>
-              {links.map(({ id, icon, label: linkLabel, badge }) => (
-                <button
-                  key={id}
-                  className={`sidebar-link${activeSection === id ? ' active' : ''}`}
-                  onClick={() => setActiveSection(id)}
-                >
-                  <span className="sidebar-icon">{icon}</span>
-                  {linkLabel}
-                  {badge !== undefined && (
-                    <span className="sidebar-link-badge">{badge || 'New'}</span>
-                  )}
-                </button>
-              ))}
-            </div>
-          ))}
-        </nav>
-
-        <div className="sidebar-footer">
-          <button id="logout-btn" className="sidebar-logout" onClick={handleLogout}>
-            <span>↩</span> Sign Out
-          </button>
-        </div>
-      </aside>
+      <DashboardSidebar 
+        user={user}
+        role={role}
+        logout={handleLogout}
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+        NAV_SECTIONS={NAV_SECTIONS}
+      />
 
       {/* ── Main ────────────────────────────────────── */}
       <main className="dash-main">
         {/* Topbar */}
-        <header className="dash-topbar">
-          <div className="dash-topbar-title">
-            {NAV_SECTIONS.flatMap((s) => s.links).find((l) => l.id === activeSection)?.label ?? 'Dashboard'}
-          </div>
-          <div className="dash-topbar-right">
-            <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-              {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })}
-            </span>
-            <div className="sidebar-avatar" style={{ width: 36, height: 36, fontSize: 14 }}>
-              {user?.name?.[0]?.toUpperCase()}
-            </div>
-          </div>
-        </header>
+        <DashboardTopbar 
+          user={user}
+          activeSection={activeSection}
+          NAV_SECTIONS={NAV_SECTIONS}
+        />
 
         {/* Content */}
         <div className="dash-content">
@@ -203,54 +163,67 @@ export default function Dashboard() {
             <div className="dash-welcome-emoji">🪷</div>
           </div>
 
-          {/* Stats */}
-          <section id="overview">
-            <div className="dash-stats-grid">
-              {stats.map(({ icon, iconBg, label, value, trend, trendType }, i) => (
-                <div
-                  key={label}
-                  className="dash-stat-card"
-                  style={{ animationDelay: `${i * 0.08}s` }}
-                >
-                  <div className="dash-stat-top">
-                    <div className="dash-stat-icon" style={{ background: iconBg }}>
-                      {icon}
+          {/* Stats - Admin Only */}
+          {user?.role === 'admin' && (
+            <section id="overview">
+              <div className="dash-stats-grid">
+                {stats.map(({ icon, iconBg, label, value, trend, trendType }, i) => (
+                  <div
+                    key={label}
+                    className="dash-stat-card"
+                    style={{ animationDelay: `${i * 0.08}s` }}
+                  >
+                    <div className="dash-stat-top">
+                      <div className="dash-stat-icon" style={{ background: iconBg }}>
+                        {icon}
+                      </div>
+                      <span className={`dash-stat-trend trend-${trendType}`}>
+                        {trend}
+                      </span>
                     </div>
-                    <span className={`dash-stat-trend trend-${trendType}`}>
-                      {trend}
-                    </span>
+                    <div>
+                      <div className="dash-stat-value">{value}</div>
+                      <div className="dash-stat-label">{label}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="dash-stat-value">{value}</div>
-                    <div className="dash-stat-label">{label}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Two-column section */}
           <div className="dash-two-col">
-            {/* Recent Activity */}
-            <div className="dash-card">
-              <div className="dash-card-header">
-                <span className="dash-card-title">Recent Activity</span>
-                <button className="dash-card-action">View all</button>
-              </div>
-              <div className="dash-card-body">
-                <div className="activity-list">
-                  {recentActivity.map(({ dot, text, time }) => (
-                    <div key={text} className="activity-item">
-                      <div className="activity-dot" style={{ background: dot }} />
-                      <div>
-                        <div className="activity-text">{text}</div>
-                        <div className="activity-time">{time}</div>
+            {/* Recent Activity - Admin Only */}
+            {user?.role === 'admin' ? (
+              <div className="dash-card">
+                <div className="dash-card-header">
+                  <span className="dash-card-title">Recent Activity</span>
+                  <button className="dash-card-action">View all</button>
+                </div>
+                <div className="dash-card-body">
+                  <div className="activity-list">
+                    {recentActivity.map(({ dot, text, time }) => (
+                      <div key={text} className="activity-item">
+                        <div className="activity-dot" style={{ background: dot }} />
+                        <div>
+                          <div className="activity-text">{text}</div>
+                          <div className="activity-time">{time}</div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="dash-card">
+                <div className="dash-card-header">
+                  <span className="dash-card-title">Welcome Message</span>
+                </div>
+                <div className="dash-card-body" style={{ color: 'var(--text-muted)' }}>
+                  As a {role.label}, your contributions help the Ashram thrive. Use the Quick Actions to get involved or view your profile details below.
+                </div>
+              </div>
+            )}
 
             {/* Quick Actions */}
             <div className="dash-card">

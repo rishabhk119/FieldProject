@@ -6,6 +6,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
+const cookieParser = require("cookie-parser");
 
 const routes = require("./routes");
 const errorHandler = require("./middleware/errorHandler");
@@ -56,6 +57,7 @@ if (env.nodeEnv === "development") {
 }
 
 // Body parsing
+app.use(cookieParser());
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true }));
 

@@ -12,18 +12,17 @@ export function AuthProvider({ children }) {
       return null
     }
   })
-  const [token, setToken] = useState(() => localStorage.getItem('token') || null)
   const [loading, setLoading] = useState(true)
 
-  // On mount, verify token with server
+  // On mount, verify auth with server
   useEffect(() => {
     const verify = async () => {
-      if (!token) { setLoading(false); return }
       try {
         const res = await getMe()
         setUser(res.data.data.user)
       } catch {
-        logout()
+        setUser(null)
+        localStorage.removeItem('user')
       } finally {
         setLoading(false)
       }
@@ -31,22 +30,24 @@ export function AuthProvider({ children }) {
     verify()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const login = (userData, authToken) => {
+  const login = (userData) => {
     setUser(userData)
-    setToken(authToken)
-    localStorage.setItem('token', authToken)
     localStorage.setItem('user', JSON.stringify(userData))
   }
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      const { logoutUser } = await import('../api/auth.api')
+      await logoutUser()
+    } catch (e) {
+      // Ignore errors on logout
+    }
     setUser(null)
-    setToken(null)
-    localStorage.removeItem('token')
     localStorage.removeItem('user')
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, loading, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   )

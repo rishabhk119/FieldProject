@@ -6,21 +6,17 @@ const api = axios.create({
   withCredentials: true,
 })
 
-// Attach JWT token to every request if present
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token')
-  if (token) config.headers.Authorization = `Bearer ${token}`
-  return config
-})
+// Remove token interceptor entirely as we now use HttpOnly cookies
 
-// Handle 401 globally — clear auth and redirect to login
+// Handle 401 globally — clear auth state and redirect to login if not already there
 api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response?.status === 401) {
-      localStorage.removeItem('token')
       localStorage.removeItem('user')
-      window.location.href = '/login'
+      if (window.location.pathname !== '/login' && window.location.pathname !== '/') {
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(err)
   }

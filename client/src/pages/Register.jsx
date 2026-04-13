@@ -7,7 +7,6 @@ import '../styles/auth.css'
 const ROLES = [
   { value: 'donor', icon: '🙏', label: 'Donor' },
   { value: 'volunteer', icon: '🤝', label: 'Volunteer' },
-  { value: 'admin', icon: '⚙️', label: 'Admin' },
 ]
 
 export default function Register() {
@@ -39,8 +38,8 @@ export default function Register() {
     setLoading(true)
     try {
       const res = await registerUser(form)
-      const { user, token } = res.data.data
-      login(user, token)
+      const { user } = res.data.data
+      login(user)
       navigate('/dashboard')
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed. Try again.')
@@ -74,7 +73,7 @@ export default function Register() {
       <div className="auth-right">
         <div className="auth-form-container">
           <div className="auth-form-header">
-            <div className="auth-logo-mark">☸️</div>
+            <img src="/logo.png" alt="Sai Tapovan Logo" style={{ width: 44, height: 44, objectFit: 'contain', filter: 'drop-shadow(0 0 12px rgba(249, 115, 22, 0.4))', marginBottom: '1rem', display: 'block', margin: '0 auto 1rem' }} />
             <h1 className="auth-form-title">Create Account</h1>
             <p className="auth-form-subtitle">Join the Sai Tapovan family</p>
           </div>
