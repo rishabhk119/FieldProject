@@ -16,5 +16,6 @@ router.get("/health", (req, res) => {
 });
 
 router.use("/auth", require("../features/auth/auth.routes"));
+router.use("/dashboard", require("../features/dashboard/dashboard.routes"));
 
 module.exports = router;

@@ -1,0 +1,18 @@
+# Root
+node_modules/
+.env
+*.log
+
+# Client build output
+client/dist/
+client/dist-ssr/
+client/.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
