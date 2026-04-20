@@ -10,6 +10,16 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 
+import About from './pages/About'
+import Programs from './pages/Programs'
+import Gallery from './pages/Gallery'
+import Contact from './pages/Contact'
+import Donations from './pages/Donations'
+import Events from './pages/Events'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import TermsOfService from './pages/TermsOfService'
+import RefundPolicy from './pages/RefundPolicy'
+
 /* Pages that should NOT show the Navbar/Footer (full-screen layouts) */
 const NO_CHROME_ROUTES = ['/login', '/register', '/dashboard']
 
@@ -36,24 +46,18 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/programs" element={<Programs />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/donate" element={<Donations />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
 
-            {/* Protected */}
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-
-            {/* Placeholder pages — redirect to home for now */}
-            <Route path="/about" element={<Navigate to="/#about" replace />} />
-            <Route path="/programs" element={<Navigate to="/" replace />} />
-            <Route path="/events" element={<Navigate to="/" replace />} />
-            <Route path="/gallery" element={<Navigate to="/" replace />} />
-            <Route path="/contact" element={<Navigate to="/#contact" replace />} />
-            <Route path="/donate" element={<Navigate to="/" replace />} />
+            {/* Dashboard (Guest-aware) */}
+            <Route path="/dashboard" element={<Dashboard />} />
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />

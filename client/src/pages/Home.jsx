@@ -190,29 +190,20 @@ export default function Home() {
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="hero-section">
         <div className="hero-bg">
+          <img 
+            src="/hero_ashram_main_1776636945138.png" 
+            alt="Sai Tapovan Ashram" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }}
+          />
           <div className="hero-bg-gradient" />
-          {/* Floating particles */}
-          {[...Array(12)].map((_, i) => (
-            <div
-              key={i}
-              className="particle"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${2 + Math.random() * 4}px`,
-                height: `${2 + Math.random() * 4}px`,
-                background: i % 2 === 0 ? 'rgba(249,115,22,0.6)' : 'rgba(212,160,23,0.5)',
-                animation: `float ${3 + Math.random() * 4}s ease-in-out ${Math.random() * 3}s infinite`,
-              }}
-            />
-          ))}
         </div>
 
         <div className="hero-content">
           <div className="hero-badge">
             <div className="hero-badge-dot" />
-            Ubhari Foundation · Established 1995
+            Ubhari Foundation · 80G/12A Registered
           </div>
+          {/* ... */}
 
           <h1 className="hero-title">
             <span className="hero-title-line1">SAI TAPOVAN</span>
@@ -270,12 +261,12 @@ export default function Home() {
         <div className="about-inner">
           <Reveal direction="left">
             <div className="about-visual">
-              <div className="about-img-wrapper">
-                <div className="about-icon-display">🏯</div>
+              <div className="about-img-wrapper" style={{ overflow: 'hidden' }}>
+                 <img src="/meditation_hall_serene_1776636961886.png" alt="Meditation Hall" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div className="about-accent-card">
-                <div className="about-accent-number">1995</div>
-                <div className="about-accent-label">Year Founded</div>
+                <div className="about-accent-number">29+</div>
+                <div className="about-accent-label">Years of Seva</div>
               </div>
             </div>
           </Reveal>
@@ -308,6 +299,18 @@ export default function Home() {
                     <span>{label}</span>
                   </div>
                 ))}
+              </div>
+
+              {/* Trust Badges */}
+              <div style={{ marginTop: '40px', display: 'flex', gap: '20px' }}>
+                <div className="glass-card" style={{ padding: '12px 24px', textAlign: 'center', border: '1px solid var(--gold-500)' }}>
+                  <div style={{ color: 'var(--gold-400)', fontWeight: 'bold', fontSize: '18px' }}>80G</div>
+                  <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Income Tax Exemption</div>
+                </div>
+                <div className="glass-card" style={{ padding: '12px 24px', textAlign: 'center', border: '1px solid var(--gold-500)' }}>
+                  <div style={{ color: 'var(--gold-400)', fontWeight: 'bold', fontSize: '18px' }}>12A</div>
+                  <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Charitable Registration</div>
+                </div>
               </div>
             </div>
           </Reveal>
@@ -479,7 +482,58 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CONTACT ───────────────────────────────────────── */}
+      {/* ── TRANSPARENCY ──────────────────────────────────── */}
+      <section style={{ padding: '80px 20px', background: 'var(--dark-900)' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <Reveal>
+            <div className="section-header">
+              <div className="section-eyebrow">Accountability</div>
+              <h2 className="section-title">Transparency & Impact</h2>
+              <p className="section-subtitle">We believe in full transparency. 100% of your public donations go directly to Seva programs.</p>
+            </div>
+          </Reveal>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 30, marginTop: 40 }}>
+            {[
+              { label: 'Healthcare & Wellness', value: '45%' },
+              { label: 'Annadan (Free Meals)', value: '35%' },
+              { label: 'Education & Gurukul', value: '15%' },
+              { label: 'Administration', value: '5%' }
+            ].map(item => (
+              <div key={item.label} className="glass-card" style={{ padding: 30, textAlign: 'center' }}>
+                <div style={{ fontSize: 32, fontWeight: 'bold', color: 'var(--saffron-400)', marginBottom: 10 }}>{item.value}</div>
+                <div style={{ color: 'var(--text-secondary)', fontSize: 14 }}>{item.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── INTERACTIVE MAP ────────────────────────────────── */}
+      <section style={{ height: '450px', position: 'relative' }}>
+         <iframe 
+           title="Ashram Location"
+           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15551.78531941656!2d77.7478051!3d12.9754124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae11f3d8383181%3A0xe54fb3a651910609!2sWhitefield%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1713567890123!5m2!1sen!2sin" 
+           width="100%" 
+           height="100%" 
+           style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }} 
+           allowFullScreen="" 
+           loading="lazy" 
+         />
+         <div style={{ 
+           position: 'absolute', 
+           bottom: 30, 
+           left: 30, 
+           background: 'var(--dark-950)', 
+           border: '1px solid var(--border-subtle)', 
+           padding: '20px', 
+           borderRadius: 12,
+           maxWidth: 300
+         }}>
+           <h4 style={{ color: 'var(--text-primary)', marginBottom: 8 }}>Visit the Ashram</h4>
+           <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Daily Darshan: 5:30 AM - 8:30 PM. Located in the heart of Whitefield.</p>
+         </div>
+      </section>
       <section className="contact-section" id="contact">
         <div className="contact-inner">
           <Reveal direction="left">

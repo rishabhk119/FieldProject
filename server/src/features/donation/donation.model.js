@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 const donationSchema = new mongoose.Schema(
   {
-    user: {
+    donor: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-      required: true,
+      required: false,
     },
     amount: {
       type: Number,
@@ -15,11 +15,14 @@ const donationSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["pending", "completed", "failed"],
-      default: "completed",
+      default: "pending",
     },
-    paymentMethod: {
+    orderId: {
       type: String,
-      default: "upi",
+      required: true,
+    },
+    paymentId: {
+      type: String,
     },
   },
   { timestamps: true }

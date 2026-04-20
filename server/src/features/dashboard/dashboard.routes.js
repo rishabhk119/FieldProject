@@ -4,9 +4,8 @@ const { protect, restrictTo } = require("../../middleware/auth.middleware");
 
 const router = express.Router();
 
-router.use(protect);
-
-router.get("/stats", restrictTo("admin"), getDashboardStats);
-router.get("/activity", restrictTo("admin"), getRecentActivity);
+// Routes made public to support "Guest Mode" / Dashboard Overview
+router.get("/stats", getDashboardStats);
+router.get("/activity", getRecentActivity);
 
 module.exports = router;

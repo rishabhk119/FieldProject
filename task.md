@@ -1,0 +1,6 @@
+- [ ] Generate and Integrate Custom Imagery
+- [ ] Create Legal Policy Pages (Privacy, Terms, Refund)
+- [ ] Implement Transparency Report in About/Home
+- [ ] Add Trust Badges (80G/12A) with Mock Registration
+- [ ] Integrate Interactive Map Embed
+- [ ] Update App Routing for New Legal Pages

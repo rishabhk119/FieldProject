@@ -27,6 +27,18 @@ export default function Footer() {
               <a href="#" className="social-btn" title="YouTube">▶️</a>
               <a href="#" className="social-btn" title="WhatsApp">💬</a>
             </div>
+
+            {/* Trust Badges */}
+            <div style={{ marginTop: 24, display: 'flex', gap: 12 }}>
+              <div style={{ border: '1px solid var(--gold-500)', padding: '6px 12px', borderRadius: '4px', fontSize: '10px', color: 'var(--gold-400)', textAlign: 'center', lineHeight: 1.2 }}>
+                <span style={{ fontWeight: 'bold', display: 'block' }}>80G</span>
+                <span>REG: 2026/UB/80G171</span>
+              </div>
+              <div style={{ border: '1px solid var(--gold-500)', padding: '6px 12px', borderRadius: '4px', fontSize: '10px', color: 'var(--gold-400)', textAlign: 'center', lineHeight: 1.2 }}>
+                <span style={{ fontWeight: 'bold', display: 'block' }}>12A</span>
+                <span>REG: IT-SEC4/12A/92</span>
+              </div>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -70,16 +82,9 @@ export default function Footer() {
             All rights reserved. 🙏
           </p>
           <div style={{ display: 'flex', gap: 20 }}>
-            <a href="#" style={{ fontSize: 13, color: 'var(--text-muted)', transition: 'color 0.2s' }}
-              onMouseEnter={(e) => (e.target.style.color = 'var(--saffron-400)')}
-              onMouseLeave={(e) => (e.target.style.color = 'var(--text-muted)')}>
-              Privacy Policy
-            </a>
-            <a href="#" style={{ fontSize: 13, color: 'var(--text-muted)', transition: 'color 0.2s' }}
-              onMouseEnter={(e) => (e.target.style.color = 'var(--saffron-400)')}
-              onMouseLeave={(e) => (e.target.style.color = 'var(--text-muted)')}>
-              Terms of Use
-            </a>
+            <Link to="/privacy-policy" style={{ fontSize: 13, color: 'var(--text-muted)' }}>Privacy Policy</Link>
+            <Link to="/terms" style={{ fontSize: 13, color: 'var(--text-muted)' }}>Terms of Use</Link>
+            <Link to="/refund-policy" style={{ fontSize: 13, color: 'var(--text-muted)' }}>Refund Policy</Link>
           </div>
         </div>
       </div>

@@ -8,4 +8,6 @@ module.exports = {
   mongoUri: process.env.MONGODB_URI || "",
   jwtSecret: process.env.JWT_SECRET || "",
   clientUrl: process.env.CLIENT_URL || "http://localhost:5173",
+  razorpayKeyId: process.env.RAZORPAY_KEY_ID || "rzp_test_placeholder",
+  razorpayKeySecret: process.env.RAZORPAY_KEY_SECRET || "razorpay_secret_placeholder",
 };

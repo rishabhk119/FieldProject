@@ -4,14 +4,7 @@ import { getMe } from '../api/auth.api'
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    try {
-      const u = localStorage.getItem('user')
-      return u ? JSON.parse(u) : null
-    } catch {
-      return null
-    }
-  })
+  const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
   // On mount, verify auth with server
@@ -22,7 +15,6 @@ export function AuthProvider({ children }) {
         setUser(res.data.data.user)
       } catch {
         setUser(null)
-        localStorage.removeItem('user')
       } finally {
         setLoading(false)
       }
@@ -32,7 +24,6 @@ export function AuthProvider({ children }) {
 
   const login = (userData) => {
     setUser(userData)
-    localStorage.setItem('user', JSON.stringify(userData))
   }
 
   const logout = async () => {
@@ -43,7 +34,6 @@ export function AuthProvider({ children }) {
       // Ignore errors on logout
     }
     setUser(null)
-    localStorage.removeItem('user')
   }
 
   return (

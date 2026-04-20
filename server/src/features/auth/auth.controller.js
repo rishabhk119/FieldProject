@@ -36,9 +36,10 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
   try {
-    res.cookie("token", "none", {
-      expires: new Date(Date.now() + 10 * 1000),
+    res.clearCookie("token", {
       httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
     });
     res.status(200).json({ success: true, message: "Logged out successfully" });
   } catch (error) {
@@ -48,17 +49,11 @@ const logout = async (req, res, next) => {
 
 const getMe = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id);
+    // req.user is already populated by protect middleware
     res.status(200).json({
       success: true,
       data: {
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          createdAt: user.createdAt,
-        },
+        user: req.user,
       },
     });
   } catch (error) {
