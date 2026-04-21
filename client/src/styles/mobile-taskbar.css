@@ -1,0 +1,66 @@
+.mobile-taskbar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 68px;
+  background: rgba(10, 8, 3, 0.85);
+  backdrop-filter: blur(25px);
+  border-top: 1px solid var(--border-subtle);
+  z-index: 1000;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 10px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.taskbar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-decoration: none;
+  gap: 4px;
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.taskbar-icon {
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+
+.taskbar-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
+}
+
+.taskbar-item.active .taskbar-icon {
+  transform: translateY(-4px);
+}
+
+.taskbar-item.active .taskbar-label {
+  color: var(--saffron-400);
+}
+
+.taskbar-indicator {
+  position: absolute;
+  top: -12px;
+  width: 4px;
+  height: 4px;
+  background: var(--saffron-500);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--saffron-500);
+}
+
+@media (max-width: 768px) {
+  .mobile-taskbar {
+    display: flex;
+  }
+}

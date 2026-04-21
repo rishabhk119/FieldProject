@@ -1,11 +1,12 @@
 const express = require("express");
-const { createOrder, verifyPayment } = require("./donations.controller");
+const { createOrder, verifyPayment, downloadReceipt, getMyDonations } = require("./donations.controller");
 const { protect } = require("../../middleware/auth.middleware");
 
 const router = express.Router();
 
-// Allow guests to create orders, but verifyPayment can record user ID if present
 router.post("/create-order", createOrder);
 router.post("/verify", verifyPayment);
+router.get("/my", protect, getMyDonations);
+router.get("/:id/receipt", protect, downloadReceipt);
 
 module.exports = router;

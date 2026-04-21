@@ -5,11 +5,11 @@ import '../styles/navbar.css'
 
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Programs', href: '/programs' },
-  { label: 'Events', href: '/events' },
+  { label: 'About Us', href: '/about' },
+  { label: 'Seva & Events', href: '/seva' },
+  { label: 'Donation', href: '/donate' },
+  { label: 'Volunteer', href: '/register' },
   { label: 'Gallery', href: '/gallery' },
-  { label: 'Contact', href: '/contact' },
 ]
 
 export default function Navbar() {
@@ -49,7 +49,7 @@ export default function Navbar() {
               <li key={href}>
                 <Link
                   to={href}
-                  className={isActive(href) ? 'active' : ''}
+                  className={`nav-link-aesthetic ${isActive(href) ? 'active' : ''}`}
                 >
                   {label}
                 </Link>

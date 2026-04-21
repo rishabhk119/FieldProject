@@ -1,5 +1,23 @@
-import { useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import '../styles/home.css'
+
+function Reveal({ children, delay = 0, direction = 'up' }) {
+  const ref = useRef(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const observer = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true) }, { threshold: 0.1 })
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [])
+  return (
+    <div ref={ref} style={{
+      opacity: visible ? 1 : 0,
+      filter: visible ? 'blur(0px)' : 'blur(10px)',
+      transform: visible ? 'none' : direction === 'up' ? 'translateY(40px)' : 'scale(0.95)',
+      transition: `all 1s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s`
+    }}>{children}</div>
+  )
+}
 
 export default function Contact() {
   useEffect(() => {
@@ -8,39 +26,67 @@ export default function Contact() {
 
   return (
     <div className="contact-page" style={{ paddingTop: '100px', background: 'var(--dark-950)', minHeight: '100vh' }}>
-      <section style={{ padding: 'var(--section-padding)', textAlign: 'center' }}>
-        <span className="section-eyebrow">Connect With Us</span>
-        <h1 className="section-title">Get In Touch</h1>
+      <section style={{ padding: 'var(--section-padding) 20px', textAlign: 'center' }}>
+        <Reveal>
+          <span className="section-eyebrow">Connect With Us</span>
+          <h1 className="section-title">Get In <span className="shimmer-text">Touch</span></h1>
+          <p className="section-subtitle" style={{ margin: '20px auto' }}>Reach out to us for enquiries, volunteer opportunities, or spiritual guidance.</p>
+        </Reveal>
       </section>
 
       <section style={{ padding: '0 20px 100px', maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px' }}>
         {/* Info Cards */}
         <div style={{ display: 'grid', gap: '20px' }}>
-          <div className="glass-card" style={{ padding: '30px' }}>
-            <h3 style={{ color: 'var(--saffron-400)', marginBottom: '15px' }}>📍 Ashram Address</h3>
-            <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-              Sai Tapovan Ashram, Whitefield Main Road,<br />
-              Near HP Campus, Bengaluru,<br />
-              Karnataka 560066, India
-            </p>
-          </div>
-          <div className="glass-card" style={{ padding: '30px' }}>
-            <h3 style={{ color: 'var(--saffron-400)', marginBottom: '15px' }}>📞 Contact Details</h3>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '10px' }}>Phone: +91 98765 43210</p>
-            <p style={{ color: 'var(--text-secondary)' }}>Email: contact@saitapovan.org</p>
-          </div>
+          <Reveal direction="left" delay={0.1}>
+            <div className="glass-card cinematic-glow" style={{ padding: '40px' }}>
+              <div style={{ color: 'var(--saffron-400)', fontSize: '24px', marginBottom: '20px' }}>📍 Ashram Address</div>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '15px' }}>
+                Sai Tapovan Ashram, Spiritual Valley,<br />
+                Ubhari Road, Sector 8A,<br />
+                Maharashtra 412213, India
+              </p>
+              <div style={{ marginTop: '20px', fontSize: '13px', color: 'var(--gold-400)', borderTop: '1px solid var(--border-subtle)', paddingTop: '15px' }}>
+                 🕒 Daily: 5:00 AM - 9:00 PM
+              </div>
+            </div>
+          </Reveal>
+          
+          <Reveal direction="left" delay={0.3}>
+            <div className="glass-card cinematic-glow" style={{ padding: '40px' }}>
+              <div style={{ color: 'var(--saffron-400)', fontSize: '24px', marginBottom: '20px' }}>📞 Contact Details</div>
+              <div style={{ display: 'grid', gap: '12px' }}>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}><strong>General:</strong> +91 98765 43210</p>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}><strong>Seva Office:</strong> +91 98765 43211</p>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}><strong>Email:</strong> info@saitapovan.org</p>
+              </div>
+            </div>
+          </Reveal>
         </div>
 
         {/* Contact Form */}
-        <div className="glass-card" style={{ padding: '40px' }}>
-          <h3 style={{ fontFamily: 'var(--font-display)', marginBottom: '25px', color: 'var(--text-primary)' }}>Send us a Message</h3>
-          <div style={{ display: 'grid', gap: '20px' }}>
-            <input type="text" placeholder="Your Name" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid var(--border-subtle)', padding: '15px', borderRadius: '8px', color: 'white' }} />
-            <input type="email" placeholder="Your Email" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid var(--border-subtle)', padding: '15px', borderRadius: '8px', color: 'white' }} />
-            <textarea placeholder="Your Message" rows="4" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid var(--border-subtle)', padding: '15px', borderRadius: '8px', color: 'white' }}></textarea>
-            <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Send Message</button>
+        <Reveal direction="right" delay={0.2}>
+          <div className="glass-card" style={{ padding: '50px', position: 'relative' }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '24px', marginBottom: '30px', color: 'var(--text-primary)' }}>Send a Sacred Message</h3>
+            <div style={{ display: 'grid', gap: '24px' }}>
+              <div>
+                <label style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', letterSpacing: '0.1em', display: 'block', marginBottom: '8px' }}>FULL NAME</label>
+                <input type="text" placeholder="e.g. Rahul Sharma" className="form-input-premium" />
+              </div>
+              <div>
+                <label style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', letterSpacing: '0.1em', display: 'block', marginBottom: '8px' }}>EMAIL ADDRESS</label>
+                <input type="email" placeholder="rahul@example.com" className="form-input-premium" />
+              </div>
+              <div>
+                <label style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', letterSpacing: '0.1em', display: 'block', marginBottom: '8px' }}>MESSAGE / QUERY</label>
+                <textarea placeholder="Describe your query or request..." rows="5" className="form-input-premium"></textarea>
+              </div>
+              <button className="btn-primary" style={{ width: '100%', justifyContent: 'center', height: '56px', fontSize: '16px' }}>🌸 Send Message</button>
+            </div>
+            <p style={{ marginTop: '24px', fontSize: '12px', color: 'var(--text-muted)', textAlign: 'center' }}>
+               Our team typically responds within 24-48 hours.
+            </p>
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   )

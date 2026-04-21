@@ -41,17 +41,17 @@ function Reveal({ children, delay = 0, direction = 'up', className = '' }) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setVisible(true) },
-      { threshold: 0.12 }
+      { threshold: 0.15 }
     )
     if (ref.current) observer.observe(ref.current)
     return () => observer.disconnect()
   }, [])
 
   const transforms = {
-    up: 'translateY(30px)',
-    left: 'translateX(-30px)',
-    right: 'translateX(30px)',
-    scale: 'scale(0.92)',
+    up: 'translateY(60px) rotateX(10deg)',
+    left: 'translateX(-60px) rotateY(-10deg)',
+    right: 'translateX(60px) rotateY(10deg)',
+    scale: 'scale(0.9) translateY(20px)',
   }
 
   return (
@@ -60,8 +60,12 @@ function Reveal({ children, delay = 0, direction = 'up', className = '' }) {
       className={className}
       style={{
         opacity: visible ? 1 : 0,
+        filter: visible ? 'blur(0px)' : 'blur(10px)',
         transform: visible ? 'none' : transforms[direction],
-        transition: `opacity 0.7s ease ${delay}s, transform 0.7s cubic-bezier(0.4,0,0.2,1) ${delay}s`,
+        transition: `opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s, 
+                     transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s,
+                     filter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s`,
+        perspective: '1000px'
       }}
     >
       {children}
@@ -177,11 +181,11 @@ export default function Home() {
   ]
 
   const galleryItems = [
-    { icon: '🙏', caption: 'Morning Aarti' },
-    { icon: '🧘', caption: 'Meditation Hall' },
-    { icon: '📿', caption: 'Bhajan Sandhya' },
-    { icon: '🌺', caption: 'Temple Flowers' },
-    { icon: '🍱', caption: 'Annadanam' },
+    { img: '/gallery_aarti.png', caption: 'Morning Aarti' },
+    { img: '/gallery_meditation.png', caption: 'Meditation Hall' },
+    { img: '/gallery_bhajan.png', caption: 'Bhajan Sandhya' },
+    { img: '/gallery_flowers.png', caption: 'Temple Flowers' },
+    { img: '/gallery_annadanam.png', caption: 'Annadanam Seva' },
   ]
 
   return (
@@ -203,7 +207,6 @@ export default function Home() {
             <div className="hero-badge-dot" />
             Ubhari Foundation · 80G/12A Registered
           </div>
-          {/* ... */}
 
           <h1 className="hero-title">
             <span className="hero-title-line1">SAI TAPOVAN</span>
@@ -302,14 +305,16 @@ export default function Home() {
               </div>
 
               {/* Trust Badges */}
-              <div style={{ marginTop: '40px', display: 'flex', gap: '20px' }}>
-                <div className="glass-card" style={{ padding: '12px 24px', textAlign: 'center', border: '1px solid var(--gold-500)' }}>
-                  <div style={{ color: 'var(--gold-400)', fontWeight: 'bold', fontSize: '18px' }}>80G</div>
-                  <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Income Tax Exemption</div>
+              <div style={{ marginTop: '40px', display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                <div className="glass-card" style={{ padding: '16px 24px', borderLeft: '4px solid var(--gold-500)', flex: '1', minWidth: '180px' }}>
+                  <div style={{ color: 'var(--gold-400)', fontWeight: 'bold', fontSize: '20px' }}>80G</div>
+                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px' }}>Income Tax Exemption</div>
+                  <div style={{ fontSize: '10px', color: 'var(--text-muted)', fontFamily: 'monospace' }}>Reg No: AAATU0000AX20214</div>
                 </div>
-                <div className="glass-card" style={{ padding: '12px 24px', textAlign: 'center', border: '1px solid var(--gold-500)' }}>
-                  <div style={{ color: 'var(--gold-400)', fontWeight: 'bold', fontSize: '18px' }}>12A</div>
-                  <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Charitable Registration</div>
+                <div className="glass-card" style={{ padding: '16px 24px', borderLeft: '4px solid var(--gold-500)', flex: '1', minWidth: '180px' }}>
+                  <div style={{ color: 'var(--gold-400)', fontWeight: 'bold', fontSize: '20px' }}>12A</div>
+                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px' }}>Charitable Trust Registration</div>
+                  <div style={{ fontSize: '10px', color: 'var(--text-muted)', fontFamily: 'monospace' }}>Reg No: 12A/PN/2021/8892</div>
                 </div>
               </div>
             </div>
@@ -400,10 +405,10 @@ export default function Home() {
           </Reveal>
 
           <div className="gallery-grid">
-            {galleryItems.map(({ icon, caption }, i) => (
+            {galleryItems.map(({ img, caption }, i) => (
               <Reveal key={caption} delay={i * 0.07}>
                 <div className="gallery-item" onClick={() => navigate('/gallery')}>
-                  <span style={{ fontSize: i === 0 ? 80 : 48 }}>{icon}</span>
+                  <img src={img} alt={caption} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <div className="gallery-overlay">
                     <span className="gallery-caption">{caption}</span>
                   </div>
@@ -482,30 +487,45 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── TRANSPARENCY ──────────────────────────────────── */}
-      <section style={{ padding: '80px 20px', background: 'var(--dark-900)' }}>
+      {/* ── TRANSPARENCY & IMPACT ─────────────────────────── */}
+      <section style={{ padding: '100px 20px', background: 'var(--dark-900)', borderTop: '1px solid var(--border-subtle)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <Reveal>
             <div className="section-header">
-              <div className="section-eyebrow">Accountability</div>
-              <h2 className="section-title">Transparency & Impact</h2>
-              <p className="section-subtitle">We believe in full transparency. 100% of your public donations go directly to Seva programs.</p>
+              <div className="section-eyebrow">Financial Integrity</div>
+              <h2 className="section-title">Trust Through Transparency</h2>
+              <p className="section-subtitle">
+                We maintain the highest standards of financial accountability. 
+                95% of every rupee goes directly toward Seva activities.
+              </p>
             </div>
           </Reveal>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 30, marginTop: 40 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, marginTop: 48 }}>
             {[
-              { label: 'Healthcare & Wellness', value: '45%' },
-              { label: 'Annadan (Free Meals)', value: '35%' },
-              { label: 'Education & Gurukul', value: '15%' },
-              { label: 'Administration', value: '5%' }
+              { label: 'Healthcare & Medical Seva', value: '42%', desc: 'Funding free health camps and village clinics.' },
+              { label: 'Annadan (Free Meals)', value: '38%', desc: 'Providing nutritional prasad to 500+ souls daily.' },
+              { label: 'Education & Gurukul', value: '15%', desc: 'Supporting Sanskrit studies and value education.' },
+              { label: 'Ops & Administration', value: '5%', desc: 'Critical infrastructure and maintenance costs.' }
             ].map(item => (
-              <div key={item.label} className="glass-card" style={{ padding: 30, textAlign: 'center' }}>
-                <div style={{ fontSize: 32, fontWeight: 'bold', color: 'var(--saffron-400)', marginBottom: 10 }}>{item.value}</div>
-                <div style={{ color: 'var(--text-secondary)', fontSize: 14 }}>{item.label}</div>
+              <div key={item.label} className="glass-card" style={{ padding: 32, borderTop: '2px solid var(--saffron-500)' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 12 }}>
+                  <div style={{ fontSize: 36, fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>{item.value}</div>
+                </div>
+                <div style={{ color: 'var(--saffron-400)', fontWeight: '600', fontSize: 15, marginBottom: 8 }}>{item.label}</div>
+                <div style={{ color: 'var(--text-muted)', fontSize: 13, lineHeight: 1.5 }}>{item.desc}</div>
               </div>
             ))}
           </div>
+
+          <Reveal delay={0.2}>
+            <div style={{ marginTop: 48, padding: 32, borderRadius: 16, background: 'rgba(255,255,255,0.02)', border: '1px dashed var(--border-subtle)', textAlign: 'center' }}>
+              <div style={{ color: 'var(--text-secondary)', fontSize: 14 }}>
+                📑 Annual Audit Reports and 80G Certificates are available for all donors upon request.
+                <Link to="/contact" style={{ color: 'var(--gold-400)', marginLeft: 8, textDecoration: 'underline' }}>Request Documents</Link>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -526,14 +546,26 @@ export default function Home() {
            left: 30, 
            background: 'var(--dark-950)', 
            border: '1px solid var(--border-subtle)', 
-           padding: '20px', 
-           borderRadius: 12,
-           maxWidth: 300
+           padding: '24px', 
+           borderRadius: 16,
+           maxWidth: 320,
+           boxShadow: 'var(--shadow-lg)'
          }}>
-           <h4 style={{ color: 'var(--text-primary)', marginBottom: 8 }}>Visit the Ashram</h4>
-           <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Daily Darshan: 5:30 AM - 8:30 PM. Located in the heart of Whitefield.</p>
+           <h4 style={{ color: 'var(--text-primary)', marginBottom: 8, fontFamily: 'var(--font-display)' }}>Visit the Ashram</h4>
+           <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+             Sai Tapovan Ashram, Whitefield Main Road, Bengaluru. 
+             Daily Darshan: 5:30 AM - 8:30 PM.
+           </p>
+           <a 
+             href="https://maps.google.com" 
+             target="_blank"  rel="noreferrer"
+             style={{ display: 'inline-block', marginTop: 16, fontSize: 12, color: 'var(--gold-400)', fontWeight: '600', letterSpacing: '0.05em' }}
+           >
+             GET DIRECTIONS ↗
+           </a>
          </div>
       </section>
+
       <section className="contact-section" id="contact">
         <div className="contact-inner">
           <Reveal direction="left">

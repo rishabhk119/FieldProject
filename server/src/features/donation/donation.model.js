@@ -17,6 +17,15 @@ const donationSchema = new mongoose.Schema(
       enum: ["pending", "completed", "failed"],
       default: "pending",
     },
+    type: {
+      type: String,
+      enum: ["general", "meal_sponsorship"],
+      default: "general",
+    },
+    metadata: {
+      type: Map,
+      of: String,
+    },
     orderId: {
       type: String,
       required: true,

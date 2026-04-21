@@ -47,9 +47,9 @@ export default function Footer() {
             <ul className="footer-links">
               <li><Link to="/">Home</Link></li>
               <li><Link to="/about">About Us</Link></li>
-              <li><Link to="/programs">Programs</Link></li>
-              <li><Link to="/events">Events</Link></li>
+              <li><Link to="/seva">Seva & Events</Link></li>
               <li><Link to="/gallery">Gallery</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
             </ul>
           </div>
 
@@ -57,10 +57,10 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Get Involved</h4>
             <ul className="footer-links">
-              <li><Link to="/donate">Donate</Link></li>
-              <li><Link to="/register">Volunteer</Link></li>
-              <li><Link to="/contact">Contact</Link></li>
-              <li><Link to="/login">Sign In</Link></li>
+              <li><Link to="/donate">Make a Donation</Link></li>
+              <li><Link to="/register">Become a Volunteer</Link></li>
+              <li><Link to="/seva">Daily Announcements</Link></li>
+              <li><Link to="/login">Account Partner</Link></li>
             </ul>
           </div>
 

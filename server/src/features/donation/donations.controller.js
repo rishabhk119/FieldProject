@@ -20,7 +20,7 @@ const getRazorpay = () => {
 
 exports.createOrder = async (req, res, next) => {
   try {
-    const { amount, currency = "INR" } = req.body;
+    const { amount, currency = "INR", type = "general", metadata = {} } = req.body;
 
     const options = {
       amount: amount * 100, // razorpay expects paise
@@ -40,6 +40,8 @@ exports.createOrder = async (req, res, next) => {
       amount: amount,
       orderId: order.id,
       status: "pending",
+      type,
+      metadata,
     });
 
     res.status(200).json({
@@ -81,6 +83,36 @@ exports.verifyPayment = async (req, res, next) => {
         message: "Invalid signature sent!",
       });
     }
+  } catch (error) {
+    next(error);
+  }
+};
+const ReceiptService = require("./receipt.service");
+
+exports.downloadReceipt = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const donation = await Donation.findById(id);
+
+    if (!donation) {
+      return res.status(404).json({ success: false, message: "Donation record not found" });
+    }
+
+    if (donation.status !== "completed") {
+      return res.status(400).json({ success: false, message: "Receipt available only for completed donations" });
+    }
+
+    // Generate and Stream PDF
+    ReceiptService.generate80GReceipt(donation, req.user, res);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getMyDonations = async (req, res, next) => {
+  try {
+    const donations = await Donation.find({ donor: req.user._id }).sort({ createdAt: -1 });
+    res.status(200).json({ success: true, data: donations });
   } catch (error) {
     next(error);
   }

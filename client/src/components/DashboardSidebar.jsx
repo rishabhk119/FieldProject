@@ -39,19 +39,30 @@ export default function DashboardSidebar({
         {NAV_SECTIONS.map(({ label, links }) => (
           <div key={label}>
             <div className="sidebar-section-label">{label}</div>
-            {links.map(({ id, icon, label: linkLabel, badge }) => (
-              <button
-                key={id}
-                className={`sidebar-link${activeSection === id ? ' active' : ''}`}
-                onClick={() => setActiveSection(id)}
-              >
-                <span className="sidebar-icon">{icon}</span>
-                {linkLabel}
-                {badge !== undefined && (
-                  <span className="sidebar-link-badge">{badge || 'New'}</span>
-                )}
-              </button>
-            ))}
+            {links.map(({ id, icon, label: linkLabel, badge, path }) => {
+              const handleClick = () => {
+                if (path) {
+                  window.open(path, '_blank')
+                } else {
+                  setActiveSection(id)
+                }
+              }
+
+              return (
+                <button
+                  key={id}
+                  className={`sidebar-link${activeSection === id ? ' active' : ''}`}
+                  onClick={handleClick}
+                >
+                  <span className="sidebar-icon">{icon}</span>
+                  {linkLabel}
+                  {path && <span style={{ marginLeft: 'auto', fontSize: '10px', opacity: 0.5 }}>↗</span>}
+                  {badge !== undefined && (
+                    <span className="sidebar-link-badge">{badge || 'New'}</span>
+                  )}
+                </button>
+              )
+            })}
           </div>
         ))}
       </nav>

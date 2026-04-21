@@ -15,17 +15,52 @@ export default function TermsOfService() {
   return (
     <div style={POLICY_STYLE}>
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 20px' }}>
-        <h1 className="section-title" style={{ textAlign: 'left', fontSize: '32px' }}>Terms of Service</h1>
-        <p style={{ marginTop: '20px' }}>Last Updated: April 20, 2026</p>
+        <h1 className="section-title" style={{ textAlign: 'left', fontSize: '36px', marginBottom: '10px' }}>Terms of Service</h1>
+        <p style={{ marginBottom: '40px', fontSize: '14px', color: 'var(--text-muted)' }}>Effective Date: April 20, 2026</p>
         
-        <section style={{ marginTop: '40px' }}>
-          <h3 style={{ color: 'var(--text-primary)', marginBottom: '15px' }}>1. Acceptance of Terms</h3>
-          <p>By using the Sai Tapovan Ashram portal, you agree to comply with all ethical and spiritual conduct guidelines of the Ashram while on premises or utilizing our digital services.</p>
+        <p style={{ marginBottom: '30px' }}>
+          Welcome to the Sai Tapovan Ashram digital portal. By accessing this website, you agree to be bound by these Terms of Service 
+          and all applicable laws and regulations of the Republic of India.
+        </p>
+
+        <section style={{ marginBottom: '40px' }}>
+          <h3 style={{ color: 'var(--text-primary)', marginBottom: '15px', fontFamily: 'var(--font-display)' }}>1. Use of Content</h3>
+          <p>
+            All spiritual content, including text, images, and audio/video material on this site, is the intellectual property of 
+            Ubhari Foundation. You may use this for personal, non-commercial spiritual growth but may not redistribute, 
+            modify, or use it for commercial purposes without written consent.
+          </p>
         </section>
 
-        <section style={{ marginTop: '30px' }}>
-          <h3 style={{ color: 'var(--text-primary)', marginBottom: '15px' }}>2. Donation Integrity</h3>
-          <p>All donations are voluntary. Users should ensure they are the rightful owners of the payment methods used.</p>
+        <section style={{ marginBottom: '40px' }}>
+          <h3 style={{ color: 'var(--text-primary)', marginBottom: '15px', fontFamily: 'var(--font-display)' }}>2. Donation Policy</h3>
+          <p>
+            Donations made through this portal are voluntary and non-refundable (subject to our Refund Policy). 
+            Donors are responsible for providing accurate information for the issuance of 80G tax exemption certificates. 
+            All donations are processed in Indian Rupees (INR).
+          </p>
+        </section>
+
+        <section style={{ marginBottom: '40px' }}>
+          <h3 style={{ color: 'var(--text-primary)', marginBottom: '15px', fontFamily: 'var(--font-display)' }}>3. User Conduct</h3>
+          <p>
+            Users agree to use the portal in a manner consistent with the spiritual and ethical values of Sai Tapovan Ashram. 
+            Any attempt to disrupt services, upload malicious code, or misrepresent identity will result in immediate termination 
+            of access and potential legal action.
+          </p>
+        </section>
+
+        <section style={{ marginBottom: '40px' }}>
+          <h3 style={{ color: 'var(--text-primary)', marginBottom: '15px', fontFamily: 'var(--font-display)' }}>4. Limitation of Liability</h3>
+          <p>
+            Sai Tapovan Ashram and Ubhari Foundation shall not be liable for any direct, indirect, incidental, or consequential damages 
+            resulting from the use or inability to use our digital services or any unauthorized access to your data.
+          </p>
+        </section>
+
+        <section style={{ marginBottom: '40px' }}>
+          <h3 style={{ color: 'var(--text-primary)', marginBottom: '15px', fontFamily: 'var(--font-display)' }}>5. Governing Law</h3>
+          <p>These terms are governed by the laws of India. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts in Maharashtra/Bengaluru.</p>
         </section>
       </div>
     </div>

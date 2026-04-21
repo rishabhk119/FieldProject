@@ -145,6 +145,13 @@ export default function Register() {
                 ))}
               </div>
             </div>
+            
+            <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '20px', textAlign: 'center' }}>
+              By creating an account, you agree to our 
+              <Link to="/terms" style={{ color: 'var(--saffron-400)', margin: '0 4px' }}>Terms of Use</Link> 
+              and 
+              <Link to="/privacy-policy" style={{ color: 'var(--saffron-400)', margin: '0 4px' }}>Privacy Policy</Link>.
+            </p>
 
             <button
               id="register-submit"
@@ -164,6 +171,12 @@ export default function Register() {
           <Link to="/" className="auth-home-link">
             ← Back to Home
           </Link>
+
+          <div className="auth-legal-links" style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '24px', fontSize: '12px', opacity: 0.6 }}>
+            <Link to="/privacy-policy">Privacy</Link>
+            <Link to="/terms">Terms</Link>
+            <Link to="/refund-policy">Refunds</Link>
+          </div>
         </div>
       </div>
     </div>

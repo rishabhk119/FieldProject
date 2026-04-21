@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import MobileTaskbar from './components/MobileTaskbar'
 
 // Pages
 import Home from './pages/Home'
@@ -11,11 +12,10 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 
 import About from './pages/About'
-import Programs from './pages/Programs'
+import Seva from './pages/Seva'
 import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
 import Donations from './pages/Donations'
-import Events from './pages/Events'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
 import RefundPolicy from './pages/RefundPolicy'
@@ -31,6 +31,7 @@ function AppShell({ children }) {
     <>
       {!hideChrome && <Navbar />}
       {children}
+      {!hideChrome && <MobileTaskbar />}
       {!hideChrome && <Footer />}
     </>
   )
@@ -47,11 +48,12 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/about" element={<About />} />
-            <Route path="/programs" element={<Programs />} />
+            <Route path="/seva" element={<Seva />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/events" element={<Events />} />
             <Route path="/donate" element={<Donations />} />
+            <Route path="/programs" element={<Navigate to="/seva" replace />} />
+            <Route path="/events" element={<Navigate to="/seva" replace />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/refund-policy" element={<RefundPolicy />} />

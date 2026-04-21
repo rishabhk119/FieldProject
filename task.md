@@ -1,6 +1,12 @@
-- [ ] Generate and Integrate Custom Imagery
-- [ ] Create Legal Policy Pages (Privacy, Terms, Refund)
-- [ ] Implement Transparency Report in About/Home
-- [ ] Add Trust Badges (80G/12A) with Mock Registration
-- [ ] Integrate Interactive Map Embed
-- [ ] Update App Routing for New Legal Pages
+- [x] Generate and Integrate Custom Imagery
+- [x] Create Legal Policy Pages (Privacy, Terms, Refund)
+- [x] Implement Transparency Report in About/Home
+- [x] Add Trust Badges (80G/12A) with Mock Registration
+- [x] Integrate Interactive Map Embed
+- [x] Update App Routing for New Legal Pages
+- [x] Live Events Update (Mahaprasad + Live Status)
+- [x] Sponsor a Meal Module (Razorpay + Custom Tiers + Metadata)
+- [x] Premium Aesthetic Animations (3D Transforms, Mesh Glows, Blur Reveals)
+- [x] Consolidate Seva & Events Pages
+- [x] Navigation UX Overhaul (Volunteer & Donation Focus)
+- [x] OS & Mobile Taskbar Icon Integration (PWA + Bottom Nav)

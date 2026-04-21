@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getDashboardStats, getRecentActivity } from '../api/dashboard.api'
+import { getMyDonations, downloadReceipt } from '../api/donations.api'
 import Loader from '../components/Loader'
 import DashboardSidebar from '../components/DashboardSidebar'
 import DashboardTopbar from '../components/DashboardTopbar'
@@ -38,6 +39,14 @@ const NAV_SECTIONS = [
       { id: 'settings', icon: '⚙️', label: 'Settings' },
     ],
   },
+  {
+    label: 'Legal',
+    links: [
+      { id: 'privacy', icon: '🔒', label: 'Privacy Policy', path: '/privacy-policy' },
+      { id: 'terms', icon: '📝', label: 'Terms of Use', path: '/terms' },
+      { id: 'refund', icon: '💰', label: 'Refund Policy', path: '/refund-policy' },
+    ],
+  },
 ]
 
 export default function Dashboard() {
@@ -47,7 +56,25 @@ export default function Dashboard() {
   
   const [dashboardData, setDashboardData] = useState(null)
   const [recentActivity, setRecentActivity] = useState([])
+  const [donations, setDonations] = useState([])
   const [loading, setLoading] = useState(true)
+  const [loadingDonations, setLoadingDonations] = useState(false)
+
+  const fetchDonations = async () => {
+    setLoadingDonations(true)
+    try {
+      const res = await getMyDonations()
+      setDonations(res.data.data)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoadingDonations(false)
+    }
+  }
+
+  useEffect(() => {
+    if (activeSection === 'donations') fetchDonations()
+  }, [activeSection])
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -92,9 +119,55 @@ export default function Dashboard() {
     switch (activeSection) {
       case 'donations':
         return (
-          <div className="dash-card">
-            <div className="dash-card-header"><span className="dash-card-title">Donation History</span></div>
-            <div className="dash-card-body"><p style={{ color: 'var(--text-muted)' }}>No donation records found for this account.</p></div>
+          <div className="dash-card" style={{ animation: 'fade-in 0.4s ease' }}>
+            <div className="dash-card-header">
+              <span className="dash-card-title">Donation History</span>
+              <button className="btn-outline" style={{ fontSize: 11, padding: '6px 12px' }} onClick={fetchDonations}>Refresh</button>
+            </div>
+            <div className="dash-card-body">
+              {donations.length > 0 ? (
+                <div className="dash-table-container">
+                  <table className="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {donations.map((d) => (
+                        <tr key={d._id}>
+                          <td style={{ fontSize: 13 }}>{new Date(d.createdAt).toLocaleDateString()}</td>
+                          <td style={{ fontWeight: 600, color: 'var(--saffron-400)' }}>₹{d.amount}</td>
+                          <td>
+                            <span className={`dash-status-pill status-${d.status}`}>
+                              {d.status}
+                            </span>
+                          </td>
+                          <td>
+                            {d.status === 'completed' && (
+                              <button 
+                                className="btn-primary" 
+                                style={{ fontSize: 11, padding: '6px 14px' }}
+                                onClick={() => downloadReceipt(d._id)}
+                              >
+                                📄 Receipt
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p style={{ color: 'var(--text-muted)', textAlign: 'center', padding: '40px 0' }}>
+                  {loadingDonations ? 'Loading your contributions...' : 'No donation records found for this account.'}
+                </p>
+              )}
+            </div>
           </div>
         )
       case 'volunteers':
