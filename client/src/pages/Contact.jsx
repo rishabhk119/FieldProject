@@ -41,9 +41,9 @@ export default function Contact() {
             <div className="glass-card cinematic-glow" style={{ padding: '40px' }}>
               <div style={{ color: 'var(--saffron-400)', fontSize: '24px', marginBottom: '20px' }}>📍 Ashram Address</div>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '15px' }}>
-                Sai Tapovan Ashram, Spiritual Valley,<br />
-                Ubhari Road, Sector 8A,<br />
-                Maharashtra 412213, India
+                Sai Tapovan Ashram, <br />
+                78CV+38, Asole, <br />
+                Maharashtra 421401
               </p>
               <div style={{ marginTop: '20px', fontSize: '13px', color: 'var(--gold-400)', borderTop: '1px solid var(--border-subtle)', paddingTop: '15px' }}>
                  🕒 Daily: 5:00 AM - 9:00 PM
@@ -55,9 +55,9 @@ export default function Contact() {
             <div className="glass-card cinematic-glow" style={{ padding: '40px' }}>
               <div style={{ color: 'var(--saffron-400)', fontSize: '24px', marginBottom: '20px' }}>📞 Contact Details</div>
               <div style={{ display: 'grid', gap: '12px' }}>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}><strong>General:</strong> +91 98765 43210</p>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}><strong>Seva Office:</strong> +91 98765 43211</p>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}><strong>Email:</strong> info@saitapovan.org</p>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}><strong>General:</strong> +91 97636 49611</p>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}><strong>Seva Office:</strong> +91 83294 56722</p>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}><strong>Email:</strong> info@ubharifoundation.org</p>
               </div>
             </div>
           </Reveal>

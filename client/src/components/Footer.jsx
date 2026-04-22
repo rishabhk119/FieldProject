@@ -20,12 +20,12 @@ export default function Footer() {
               A sanctuary of peace, devotion, and selfless service rooted in the eternal teachings of Shirdi Sai Baba.
             </p>
             <div className="footer-social">
-              <a href="https://www.instagram.com/sai_tapovan_ashram" target="_blank" rel="noopener noreferrer" className="social-btn" title="Instagram">
+              <a href="https://www.instagram.com/ubharifoundation?igsh=b2R4cHluZnhjZ2J0" target="_blank" rel="noopener noreferrer" className="social-btn" title="Instagram">
                 📸
               </a>
-              <a href="#" className="social-btn" title="Facebook">📘</a>
-              <a href="#" className="social-btn" title="YouTube">▶️</a>
-              <a href="#" className="social-btn" title="WhatsApp">💬</a>
+              <a href="http://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="social-btn" title="Facebook">📘</a>
+              <a href="https://www.youtube.com/@ubharifoundation" target="_blank" rel="noopener noreferrer" className="social-btn" title="YouTube">▶️</a>
+              <a href="https://wa.me/919763649611" target="_blank" rel="noopener noreferrer" className="social-btn" title="WhatsApp">💬</a>
             </div>
 
             {/* Trust Badges */}
@@ -69,8 +69,8 @@ export default function Footer() {
             <h4>Connect</h4>
             <ul className="footer-links">
               <li><a href="#">📍 Maharashtra, India</a></li>
-              <li><a href="tel:+919876543210">📞 +91 98765 43210</a></li>
-              <li><a href="mailto:info@saitapovan.org">✉️ info@saitapovan.org</a></li>
+              <li><a href="tel:+919763649611">📞 +91 97636 49611</a></li>
+              <li><a href="mailto:info@ubharifoundation.org">✉️ info@ubharifoundation.org</a></li>
               <li><a href="#">🕐 5:30 AM – 8:30 PM Daily</a></li>
             </ul>
           </div>

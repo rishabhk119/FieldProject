@@ -34,7 +34,7 @@ function AnimCounter({ target, suffix = '', duration = 2000 }) {
 }
 
 /* ── Scroll Reveal ────────────────────────────────────── */
-function Reveal({ children, delay = 0, direction = 'up', className = '' }) {
+function Reveal({ children, delay = 0, direction = 'up', className = '', style = {} }) {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
 
@@ -59,6 +59,7 @@ function Reveal({ children, delay = 0, direction = 'up', className = '' }) {
       ref={ref}
       className={className}
       style={{
+        ...style,
         opacity: visible ? 1 : 0,
         filter: visible ? 'blur(0px)' : 'blur(10px)',
         transform: visible ? 'none' : transforms[direction],
@@ -119,19 +120,19 @@ export default function Home() {
 
   const testimonials = [
     {
-      quote: 'Three days at Sai Tapovan changed my perspective on life entirely. The peace I felt there is indescribable. I return every year.',
-      name: 'Kavitha Menon',
+      quote: 'Visited last month during Guru Purnima. The morning Aarti and the overall aura of the ashram is incredibly peaceful. Very well maintained and the volunteers are so humble. Jai Sai Ram!',
+      name: 'Kavitha Chouhan',
       role: 'Software Engineer, Bengaluru',
       initial: 'K',
     },
     {
-      quote: 'The Annadanam programme has been feeding our village children for over a decade. Swamiji\'s compassion is boundless.',
+      quote: 'अन्नदानम् परम् दानम्। यहाँ का अन्नदान पिछले कई सालों से हमारे गाँवों के लिए एक वरदान है। जो निस्वार्थ सेवा यहाँ हो रही है, वह सच में अद्भुत है। मन को बहुत शांति मिली।',
       name: 'Ramesh Patil',
-      role: 'Farmer, Nashik',
+      role: 'Local Farmer, Nashik',
       initial: 'R',
     },
     {
-      quote: 'My children learned Sanskrit and values here that no school could teach. Gurukul education at its finest.',
+      quote: 'We admitted our son to the weekend Gurukul. It is beautiful to see kids chanting shlokas and learning sanskaras which are completely missing in modern schools. Highly recommended.',
       name: 'Dr. Priya Sharma',
       role: 'Pediatrician, Pune',
       initial: 'P',
@@ -406,8 +407,21 @@ export default function Home() {
 
           <div className="gallery-grid">
             {galleryItems.map(({ img, caption }, i) => (
-              <Reveal key={caption} delay={i * 0.07}>
-                <div className="gallery-item" onClick={() => navigate('/gallery')}>
+              <Reveal 
+                key={caption} 
+                delay={i * 0.07}
+                style={{
+                  gridRow: i === 0 ? 'span 2' : 'auto',
+                  aspectRatio: i === 0 ? undefined : '1',
+                  height: '100%',
+                  position: 'relative'
+                }}
+              >
+                <div 
+                  className="gallery-item" 
+                  onClick={() => navigate('/gallery')}
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+                >
                   <img src={img} alt={caption} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <div className="gallery-overlay">
                     <span className="gallery-caption">{caption}</span>
@@ -431,11 +445,11 @@ export default function Home() {
 
           <div className="testimonials-grid">
             {testimonials.map(({ quote, name, role, initial }, i) => (
-              <Reveal key={name} delay={i * 0.12}>
-                <div className="testimonial-card">
+              <Reveal key={name} delay={i * 0.12} style={{ height: '100%' }}>
+                <div className="testimonial-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <div className="testimonial-stars">★★★★★</div>
                   <p className="testimonial-quote">&ldquo;{quote}&rdquo;</p>
-                  <div className="testimonial-author">
+                  <div className="testimonial-author" style={{ marginTop: 'auto' }}>
                     <div className="testimonial-avatar">{initial}</div>
                     <div>
                       <div className="testimonial-name">{name}</div>
@@ -533,7 +547,7 @@ export default function Home() {
       <section style={{ height: '450px', position: 'relative' }}>
          <iframe 
            title="Ashram Location"
-           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15551.78531941656!2d77.7478051!3d12.9754124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae11f3d8383181%3A0xe54fb3a651910609!2sWhitefield%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1713567890123!5m2!1sen!2sin" 
+           src="https://maps.google.com/maps?q=78CV%2B38%2C+Asole%2C+Maharashtra+421401&t=&z=13&ie=UTF8&iwloc=&output=embed" 
            width="100%" 
            height="100%" 
            style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }} 
@@ -553,11 +567,11 @@ export default function Home() {
          }}>
            <h4 style={{ color: 'var(--text-primary)', marginBottom: 8, fontFamily: 'var(--font-display)' }}>Visit the Ashram</h4>
            <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-             Sai Tapovan Ashram, Whitefield Main Road, Bengaluru. 
-             Daily Darshan: 5:30 AM - 8:30 PM.
+             Sai Tapovan Ashram, <br/>78CV+38, Asole, Maharashtra 421401. 
+             <br/>Daily Darshan: 5:30 AM - 8:30 PM.
            </p>
            <a 
-             href="https://maps.google.com" 
+             href="https://maps.google.com/maps?q=78CV%2B38%2C+Asole%2C+Maharashtra+421401" 
              target="_blank"  rel="noreferrer"
              style={{ display: 'inline-block', marginTop: 16, fontSize: 12, color: 'var(--gold-400)', fontWeight: '600', letterSpacing: '0.05em' }}
            >
@@ -579,9 +593,9 @@ export default function Home() {
 
               <div className="contact-details">
                 {[
-                  { icon: '📍', label: 'Address', value: 'Sai Tapovan Ashram, Maharashtra, India' },
-                  { icon: '📞', label: 'Phone', value: '+91 98765 43210' },
-                  { icon: '✉️', label: 'Email', value: 'info@saitapovan.org' },
+                  { icon: '📍', label: 'Address', value: '78CV+38, Asole, Maharashtra 421401' },
+                  { icon: '📞', label: 'Phone', value: '+91 97636 49611' },
+                  { icon: '✉️', label: 'Email', value: 'info@ubharifoundation.org' },
                   { icon: '🕐', label: 'Darshan Hours', value: 'Daily · 5:30 AM – 8:30 PM' },
                 ].map(({ icon, label, value }) => (
                   <div key={label} className="contact-detail-item">

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import '../styles/home.css'
 
-function Reveal({ children, delay = 0, direction = 'up' }) {
+function Reveal({ children, delay = 0, direction = 'up', style = {} }) {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
   useEffect(() => {
@@ -19,6 +19,7 @@ function Reveal({ children, delay = 0, direction = 'up' }) {
 
   return (
     <div ref={ref} style={{
+      ...style,
       opacity: visible ? 1 : 0,
       filter: visible ? 'blur(0px)' : 'blur(15px)',
       transform: visible ? 'none' : transforms[direction],
@@ -88,8 +89,8 @@ export default function About() {
               { label: 'Annual Audits', value: 'Radiant Transparency', desc: 'Financial accounts are meticulously vetted by independent professionals.' },
               { label: 'Patron Support', value: 'Global Community', desc: 'Powered by thousands of devotees across 12 countries.' },
             ].map((item, i) => (
-              <Reveal key={item.label} delay={i * 0.15} direction="scale">
-                <div className="glass-card" style={{ padding: '40px', textAlign: 'center', borderBottom: '4px solid var(--gold-500)', transition: 'transform 0.5s ease' }}>
+              <Reveal key={item.label} delay={i * 0.15} direction="scale" style={{ height: '100%' }}>
+                <div className="glass-card" style={{ padding: '40px', textAlign: 'center', borderBottom: '4px solid var(--gold-500)', transition: 'transform 0.5s ease', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <div style={{ color: 'var(--gold-400)', fontWeight: '700', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.2em' }}>{item.label}</div>
                   <div style={{ color: 'var(--text-primary)', fontSize: '26px', fontWeight: 'bold', margin: '16px 0', fontFamily: 'var(--font-display)' }}>{item.value}</div>
                   <div style={{ color: 'var(--text-muted)', fontSize: '14px', lineHeight: '1.6' }}>{item.desc}</div>

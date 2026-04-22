@@ -62,7 +62,7 @@ export default function PrivacyPolicy() {
 
         <section style={{ marginBottom: '40px' }}>
           <h3 style={{ color: 'var(--text-primary)', marginBottom: '15px', fontFamily: 'var(--font-display)' }}>5. Contact Us</h3>
-          <p>If you have any questions regarding this privacy policy, you may contact our Grievance Officer at info@saitapovan.org.</p>
+          <p>If you have any questions regarding this privacy policy, you may contact our Grievance Officer at info@ubharifoundation.org.</p>
         </section>
       </div>
     </div>

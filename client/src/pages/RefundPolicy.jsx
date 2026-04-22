@@ -31,7 +31,7 @@ export default function RefundPolicy() {
           </p>
           <p style={{ marginTop: '10px' }}>
             <strong>Exceptions:</strong> In the event of a technical error (e.g., double-charge or unauthorized transaction), 
-            donors must notify us at info@saitapovan.org within 48 hours. Upon verification, the refund will be processed 
+            donors must notify us at info@ubharifoundation.org within 48 hours. Upon verification, the refund will be processed 
             within 7-10 working days via the original payment method.
           </p>
         </section>
