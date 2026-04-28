@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Flower2 } from 'lucide-react'
 
 export default function Loader({ fullScreen = false, text = "Loading..." }) {
   return (
@@ -25,7 +26,7 @@ export default function Loader({ fullScreen = false, text = "Loading..." }) {
           justifyContent: 'center'
         }}
       >
-        🪷
+        <Flower2 size={56} color="var(--saffron-500)" />
       </motion.div>
       
       {/* Pulsing Text */}

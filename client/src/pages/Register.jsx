@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Flower2, AlertCircle, HandHeart, UserPlus, ArrowLeft, HeartHandshake, Users } from 'lucide-react'
 import { registerUser } from '../api/auth.api'
 import { useAuth } from '../context/AuthContext'
 import '../styles/auth.css'
 
 const ROLES = [
-  { value: 'donor', icon: '🙏', label: 'Donor' },
-  { value: 'volunteer', icon: '🤝', label: 'Volunteer' },
+  { value: 'donor', icon: <HeartHandshake size={20} />, label: 'Donor' },
+  { value: 'volunteer', icon: <Users size={20} />, label: 'Volunteer' },
 ]
 
 export default function Register() {
@@ -53,9 +54,11 @@ export default function Register() {
       {/* Left - Visual */}
       <div className="auth-left">
         <div className="auth-left-pattern" />
-        <div className="auth-left-mandala">☸️</div>
+        <div className="auth-left-mandala">
+          <Flower2 size={280} />
+        </div>
         <div className="auth-left-content">
-          <div className="auth-left-badge">🪷 Join Our Community</div>
+          <div className="auth-left-badge"><HandHeart size={14} /> Jai Sai Ram</div>
           <h2 className="auth-left-title">
             Begin Your Journey
             <span>at Sai Tapovan</span>
@@ -73,7 +76,7 @@ export default function Register() {
       <div className="auth-right">
         <div className="auth-form-container">
           <div className="auth-form-header">
-            <img src="/logo.png" alt="Sai Tapovan Logo" style={{ width: 44, height: 44, objectFit: 'contain', filter: 'drop-shadow(0 0 12px rgba(249, 115, 22, 0.4))', marginBottom: '1rem', display: 'block', margin: '0 auto 1rem' }} />
+            <img src="/logo.png" alt="Sai Tapovan Logo" style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '50%', clipPath: 'circle(48%)', filter: 'drop-shadow(0 0 15px rgba(249, 115, 22, 0.5))', marginBottom: '1.5rem', display: 'block', margin: '0 auto 1.5rem' }} />
             <h1 className="auth-form-title">Create Account</h1>
             <p className="auth-form-subtitle">Join the Sai Tapovan family</p>
           </div>
@@ -81,7 +84,7 @@ export default function Register() {
           <form className="auth-form" onSubmit={handleSubmit} noValidate>
             {error && (
               <div className="auth-error" role="alert">
-                <span>⚠️</span>
+                <AlertCircle size={18} />
                 <span>{error}</span>
               </div>
             )}
@@ -159,7 +162,7 @@ export default function Register() {
               className="auth-submit-btn"
               disabled={loading}
             >
-              {loading ? <span className="spinner" /> : '🌸 Create Account'}
+              {loading ? <span className="spinner" /> : <><UserPlus size={18} /> Create Account</>}
             </button>
           </form>
 
@@ -169,7 +172,7 @@ export default function Register() {
           </p>
 
           <Link to="/" className="auth-home-link">
-            ← Back to Home
+            <ArrowLeft size={16} /> Back to Home
           </Link>
 
           <div className="auth-legal-links" style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '24px', fontSize: '12px', opacity: 0.6 }}>

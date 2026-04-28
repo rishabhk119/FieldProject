@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { ShieldCheck, Heart, Soup, X } from 'lucide-react'
 import api from '../api/api'
 
 const MEAL_TIERS = [
@@ -51,7 +52,7 @@ export default function MealSponsorshipModal({ isOpen, onClose }) {
         handler: async function (response) {
           try {
             await api.post('donations/verify', response)
-            alert('🙏 Jai Sai Ram! Your meal sponsorship has been recorded. Our kitchen team will be notified.')
+            alert('Jai Sai Ram! Your meal sponsorship has been recorded. Our kitchen team will be notified.')
             onClose()
           } catch (e) {
             alert('Verification failed. Please contact support.')
@@ -85,7 +86,7 @@ export default function MealSponsorshipModal({ isOpen, onClose }) {
           style={{ position: 'absolute', top: 20, right: 20, background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: 24, cursor: 'pointer' }}
           onClick={onClose}
         >
-          ×
+          <X size={24} />
         </button>
 
         <span className="section-eyebrow">Annadan Seva</span>
@@ -119,15 +120,15 @@ export default function MealSponsorshipModal({ isOpen, onClose }) {
 
         <button 
           className="btn-primary" 
-          style={{ width: '100%', justifyContent: 'center', height: 56, fontSize: 16 }}
+          style={{ width: '100%', justifyContent: 'center', height: 56, fontSize: 16, display: 'flex', alignItems: 'center', gap: '8px' }}
           onClick={handlePayment}
           disabled={isProcessing}
         >
-          {isProcessing ? 'Connecting to Secure Server...' : `Sponsor ${selectedTier.label} · ₹${selectedTier.amount.toLocaleString('en-IN')}`}
+          {isProcessing ? 'Connecting...' : <><Soup size={18} /> {`Sponsor ${selectedTier.label} · ₹${selectedTier.amount.toLocaleString('en-IN')}`}</>}
         </button>
 
-        <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-muted)', marginTop: 20 }}>
-          🔒 Secure 80G compliant donation via Razorpay.
+        <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-muted)', marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+          <ShieldCheck size={14} color="var(--forest-400)" /> Secure 80G compliant donation via Razorpay.
         </p>
       </div>
     </div>

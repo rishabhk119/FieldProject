@@ -28,8 +28,11 @@
 }
 
 .taskbar-icon {
-  font-size: 20px;
-  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
 }
 
 .taskbar-label {
@@ -43,6 +46,7 @@
 
 .taskbar-item.active .taskbar-icon {
   transform: translateY(-4px);
+  color: var(--saffron-400);
 }
 
 .taskbar-item.active .taskbar-label {

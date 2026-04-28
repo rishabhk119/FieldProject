@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
+import { MapPin, Clock, Phone, Mail, Send } from 'lucide-react'
+import ContactForm from '../components/ContactForm'
 import '../styles/home.css'
 
 function Reveal({ children, delay = 0, direction = 'up' }) {
@@ -25,7 +27,7 @@ export default function Contact() {
   }, [])
 
   return (
-    <div className="contact-page" style={{ paddingTop: '100px', background: 'var(--dark-950)', minHeight: '100vh' }}>
+    <div className="contact-page" style={{ paddingTop: '116px', background: 'var(--dark-950)', minHeight: '100vh' }}>
       <section style={{ padding: 'var(--section-padding) 20px', textAlign: 'center' }}>
         <Reveal>
           <span className="section-eyebrow">Connect With Us</span>
@@ -39,21 +41,25 @@ export default function Contact() {
         <div style={{ display: 'grid', gap: '20px' }}>
           <Reveal direction="left" delay={0.1}>
             <div className="glass-card cinematic-glow" style={{ padding: '40px' }}>
-              <div style={{ color: 'var(--saffron-400)', fontSize: '24px', marginBottom: '20px' }}>📍 Ashram Address</div>
+              <div style={{ color: 'var(--saffron-400)', fontSize: '20px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '12px', fontFamily: 'var(--font-display)', letterSpacing: '0.05em' }}>
+                <MapPin size={24} /> Ashram Address
+              </div>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '15px' }}>
                 Sai Tapovan Ashram, <br />
                 78CV+38, Asole, <br />
                 Maharashtra 421401
               </p>
-              <div style={{ marginTop: '20px', fontSize: '13px', color: 'var(--gold-400)', borderTop: '1px solid var(--border-subtle)', paddingTop: '15px' }}>
-                 🕒 Daily: 5:00 AM - 9:00 PM
+              <div style={{ marginTop: '20px', fontSize: '13px', color: 'var(--gold-400)', borderTop: '1px solid var(--border-subtle)', paddingTop: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                 <Clock size={14} /> Daily: 5:00 AM - 9:00 PM
               </div>
             </div>
           </Reveal>
           
           <Reveal direction="left" delay={0.3}>
             <div className="glass-card cinematic-glow" style={{ padding: '40px' }}>
-              <div style={{ color: 'var(--saffron-400)', fontSize: '24px', marginBottom: '20px' }}>📞 Contact Details</div>
+              <div style={{ color: 'var(--saffron-400)', fontSize: '20px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '12px', fontFamily: 'var(--font-display)', letterSpacing: '0.05em' }}>
+                <Phone size={24} /> Contact Details
+              </div>
               <div style={{ display: 'grid', gap: '12px' }}>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}><strong>General:</strong> +91 97636 49611</p>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}><strong>Seva Office:</strong> +91 83294 56722</p>
@@ -67,21 +73,7 @@ export default function Contact() {
         <Reveal direction="right" delay={0.2}>
           <div className="glass-card" style={{ padding: '50px', position: 'relative' }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '24px', marginBottom: '30px', color: 'var(--text-primary)' }}>Send a Sacred Message</h3>
-            <div style={{ display: 'grid', gap: '24px' }}>
-              <div>
-                <label style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', letterSpacing: '0.1em', display: 'block', marginBottom: '8px' }}>FULL NAME</label>
-                <input type="text" placeholder="e.g. Rahul Sharma" className="form-input-premium" />
-              </div>
-              <div>
-                <label style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', letterSpacing: '0.1em', display: 'block', marginBottom: '8px' }}>EMAIL ADDRESS</label>
-                <input type="email" placeholder="rahul@example.com" className="form-input-premium" />
-              </div>
-              <div>
-                <label style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', letterSpacing: '0.1em', display: 'block', marginBottom: '8px' }}>MESSAGE / QUERY</label>
-                <textarea placeholder="Describe your query or request..." rows="5" className="form-input-premium"></textarea>
-              </div>
-              <button className="btn-primary" style={{ width: '100%', justifyContent: 'center', height: '56px', fontSize: '16px' }}>🌸 Send Message</button>
-            </div>
+            <ContactForm />
             <p style={{ marginTop: '24px', fontSize: '12px', color: 'var(--text-muted)', textAlign: 'center' }}>
                Our team typically responds within 24-48 hours.
             </p>

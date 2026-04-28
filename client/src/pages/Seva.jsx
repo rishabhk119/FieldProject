@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { BookOpen, Hospital, Sprout, Clock, MapPin, HandHeart, Calendar } from 'lucide-react'
 import '../styles/home.css'
 import MealSponsorshipModal from '../components/MealSponsorshipModal'
 
@@ -6,17 +7,17 @@ const PROGRAMS = [
   {
     title: 'Vedic Education',
     desc: 'Preserving ancient wisdom through modern educational frameworks for the youth.',
-    icon: '📖'
+    icon: <BookOpen size={32} />
   },
   {
     title: 'Healthcare Seva',
     desc: 'Mobile clinics and medical camps providing essential care to remote villages.',
-    icon: '🏥'
+    icon: <Hospital size={32} />
   },
   {
     title: 'Sustainable Living',
     desc: 'Organic farming and eco-conscious initiatives within the Ashram premises.',
-    icon: '🌿'
+    icon: <Sprout size={32} />
   }
 ]
 
@@ -54,7 +55,7 @@ export default function Seva() {
   }, [])
 
   return (
-    <div className="seva-page" style={{ paddingTop: '100px', background: 'var(--dark-950)', minHeight: '100vh' }}>
+    <div className="seva-page" style={{ paddingTop: '116px', background: 'var(--dark-950)', minHeight: '100vh' }}>
       {/* Header */}
       <section style={{ padding: 'var(--section-padding)', textAlign: 'center' }}>
         <span className="section-eyebrow">Service & Devotion</span>
@@ -66,7 +67,9 @@ export default function Seva() {
 
       {/* Daily Initiatives Section */}
       <section style={{ padding: '0 20px 80px', maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)', textAlign: 'center', marginBottom: '40px', fontSize: '32px' }}>🌿 Our Daily Initiatives</h2>
+        <h2 style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)', textAlign: 'center', marginBottom: '40px', fontSize: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+          <Sprout size={32} color="var(--saffron-500)" /> Our Daily Initiatives
+        </h2>
         
         {/* Featured Annadan Card */}
         <div className="glass-card" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px', padding: '10px', overflow: 'hidden', marginBottom: '40px' }}>
@@ -79,8 +82,8 @@ export default function Seva() {
             <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '30px' }}>
               Our daily Annadan program serves over 500 sanctified meals to devotees and those in need, embodying the principle of "Sabka Malik Ek."
             </p>
-            <button className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setIsModalOpen(true)}>
-              🙏 Sponsor a Meal
+            <button className="btn-primary" style={{ alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => setIsModalOpen(true)}>
+              <HandHeart size={18} /> Sponsor a Meal
             </button>
           </div>
         </div>
@@ -89,7 +92,7 @@ export default function Seva() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
           {PROGRAMS.map(p => (
             <div key={p.title} className="glass-card" style={{ padding: '32px' }}>
-              <div style={{ fontSize: '32px', marginBottom: '16px' }}>{p.icon}</div>
+              <div style={{ color: 'var(--saffron-400)', marginBottom: '16px' }}>{p.icon}</div>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '22px', marginBottom: '12px' }}>{p.title}</h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}>{p.desc}</p>
             </div>
@@ -100,7 +103,9 @@ export default function Seva() {
       {/* Events Section */}
       <section style={{ padding: '80px 20px 100px', background: 'var(--dark-900)' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)', textAlign: 'center', marginBottom: '60px', fontSize: '32px' }}>📅 Upcoming & Live Events</h2>
+          <h2 style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)', textAlign: 'center', marginBottom: '60px', fontSize: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+            <Calendar size={32} color="var(--saffron-500)" /> Upcoming & Live Events
+          </h2>
           
           <div style={{ display: 'grid', gap: '30px' }}>
             {EVENTS.map((ev, i) => (
@@ -141,13 +146,13 @@ export default function Seva() {
                     {ev.title}
                   </h3>
                   <div style={{ display: 'flex', gap: '24px', fontSize: '14px', color: 'var(--gold-400)', marginBottom: '20px' }}>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>🕒 {ev.time}</span>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>📍 {ev.location}</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Clock size={16} /> {ev.time}</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><MapPin size={16} /> {ev.location}</span>
                   </div>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.7' }}>{ev.desc}</p>
                   <div style={{ marginTop: '30px', display: 'flex', gap: '15px' }}>
-                     <button className="btn-primary" style={{ padding: '10px 24px', fontSize: '14px' }}>
-                       {ev.isLive ? '🙏 Remote Darshan' : 'Remind Me'}
+                     <button className="btn-primary" style={{ padding: '10px 24px', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                       {ev.isLive ? <><HandHeart size={16} /> Remote Darshan</> : 'Remind Me'}
                      </button>
                      {ev.isLive && (
                        <button className="btn-outline" style={{ padding: '10px 24px', fontSize: '14px' }} onClick={() => setIsModalOpen(true)}>

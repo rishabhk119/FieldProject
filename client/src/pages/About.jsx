@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import '../styles/home.css'
+import { Compass, History } from 'lucide-react'
 
 function Reveal({ children, delay = 0, direction = 'up', style = {} }) {
   const ref = useRef(null)
@@ -35,7 +36,7 @@ export default function About() {
   }, [])
 
   return (
-    <div className="about-page" style={{ paddingTop: '100px', background: 'var(--dark-950)', minHeight: '100vh' }}>
+    <div className="about-page" style={{ paddingTop: '116px', background: 'var(--dark-950)', minHeight: '100vh' }}>
       <section style={{ padding: 'var(--section-padding) 20px', textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
         <Reveal>
           <span className="section-eyebrow">Our Legacy</span>
@@ -49,8 +50,10 @@ export default function About() {
       <section style={{ padding: '0 20px 80px', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px' }}>
           <Reveal direction="left" delay={0.2}>
-            <div className="glass-card cinematic-glow" style={{ padding: '50px', height: '100%' }}>
-              <div style={{ fontSize: '40px', marginBottom: '24px' }}>🎯</div>
+            <div className="glass-card cinematic-glow" style={{ padding: '50px', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div className="about-card-icon" style={{ color: 'var(--saffron-400)', marginBottom: '24px' }}>
+                <Compass size={40} />
+              </div>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '28px', color: 'var(--gold-400)', marginBottom: '24px' }}>Our Mission</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.9', fontSize: '16px' }}>
                 To provide a nurturing environment for spiritual growth while actively serving humanity through healthcare, education, and community support. 
@@ -60,12 +63,14 @@ export default function About() {
           </Reveal>
           
           <Reveal direction="right" delay={0.4}>
-            <div className="glass-card cinematic-glow" style={{ padding: '50px', height: '100%' }}>
-              <div style={{ fontSize: '40px', marginBottom: '24px' }}>🏺</div>
+            <div className="glass-card cinematic-glow" style={{ padding: '50px', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div className="about-card-icon" style={{ color: 'var(--saffron-400)', marginBottom: '24px' }}>
+                <History size={40} />
+              </div>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '28px', color: 'var(--gold-400)', marginBottom: '24px' }}>The Legacy</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.9', fontSize: '16px' }}>
                 Inspired by the profound teachings of Shirdi Sai Baba, the Ashram has evolved from a silent meditation retreat into a vibrant center for the Ubhari Foundation, 
-                now impacting over 50,000 lives across the region.
+                now impacting over 10,000 lives across the region.
               </p>
             </div>
           </Reveal>
@@ -102,7 +107,7 @@ export default function About() {
       </section>
       
       <Reveal delay={0.3}>
-        <div className="ornament-divider" style={{ margin: '120px auto' }}>🪷</div>
+        <img src="/logo.png" alt="Sai Tapovan Ornament" style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '50%', clipPath: 'circle(48%)', filter: 'drop-shadow(0 0 15px rgba(249, 115, 22, 0.4))', display: 'block', margin: '120px auto' }} />
       </Reveal>
     </div>
   )

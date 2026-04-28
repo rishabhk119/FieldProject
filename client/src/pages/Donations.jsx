@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { ShieldCheck, HandHeart } from 'lucide-react'
 import api from '../api/api'
 import '../styles/home.css'
 
@@ -54,7 +55,7 @@ export default function Donations() {
         handler: async function (response) {
           try {
             await api.post('donations/verify', response)
-            alert('🙏 Jai Sai Ram! Donation successful. Thank you for your kindness.')
+            alert('Jai Sai Ram! Donation successful. Thank you for your kindness.')
           } catch (e) {
             alert('Verification failed. Please contact support.')
           }
@@ -79,7 +80,7 @@ export default function Donations() {
   }
 
   return (
-    <div className="donation-page" style={{ paddingTop: '120px', background: 'var(--dark-950)', minHeight: '100vh' }}>
+    <div className="donation-page" style={{ paddingTop: '116px', background: 'var(--dark-950)', minHeight: '100vh' }}>
       <section style={{ padding: '40px 20px', textAlign: 'center', maxWidth: '900px', margin: '0 auto' }}>
         <Reveal>
           <span className="section-eyebrow">Abhaya Dana</span>
@@ -141,12 +142,14 @@ export default function Donations() {
               onClick={handlePayment}
               disabled={isProcessing}
             >
-              {isProcessing ? <span className="spinner" /> : '🙏 PROCEED TO SECURE PAYMENT'}
+              {isProcessing ? <span className="spinner" /> : <><HandHeart size={20} style={{ marginRight: 8 }} /> PROCEED TO SECURE PAYMENT</>}
             </button>
             
             <div style={{ marginTop: 40, borderTop: '1px solid var(--border-subtle)', paddingTop: 30, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                 <div style={{ width: 40, height: 40, background: 'rgba(212,160,23,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold-400)' }}>🛡️</div>
+                 <div style={{ width: 40, height: 40, background: 'rgba(212,160,23,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold-400)' }}>
+                    <ShieldCheck size={20} />
+                 </div>
                  <div>
                     <div style={{ fontSize: 13, color: 'var(--text-primary)', fontWeight: 600 }}>Razorpay Secure</div>
                     <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>256-bit SSL Encryption</div>

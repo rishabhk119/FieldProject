@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { LogOut, ExternalLink } from 'lucide-react'
 
 export default function DashboardSidebar({ 
   user, 
@@ -12,7 +13,7 @@ export default function DashboardSidebar({
     <aside className="dash-sidebar">
       <div className="sidebar-header">
         <Link to="/" className="sidebar-brand" style={{ textDecoration: 'none' }}>
-          <img src="/logo.png" alt="Sai Tapovan Logo" style={{ width: 42, height: 42, objectFit: 'contain', filter: 'drop-shadow(0 0 10px rgba(249, 115, 22, 0.5))' }} />
+          <img src="/logo.png" alt="Sai Tapovan Logo" style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: '50%', clipPath: 'circle(48%)', filter: 'drop-shadow(0 0 12px rgba(249, 115, 22, 0.6))' }} />
           <div>
             <div className="sidebar-brand-name">SAI TAPOVAN</div>
             <div className="sidebar-brand-sub">Ashram Portal</div>
@@ -53,10 +54,11 @@ export default function DashboardSidebar({
                   key={id}
                   className={`sidebar-link${activeSection === id ? ' active' : ''}`}
                   onClick={handleClick}
+                  style={id.startsWith('admin-') ? { borderLeft: '2px solid var(--saffron-500)', paddingLeft: '12px' } : {}}
                 >
                   <span className="sidebar-icon">{icon}</span>
                   {linkLabel}
-                  {path && <span style={{ marginLeft: 'auto', fontSize: '10px', opacity: 0.5 }}>↗</span>}
+                  {path && <ExternalLink size={12} style={{ marginLeft: 'auto', opacity: 0.5 }} />}
                   {badge !== undefined && (
                     <span className="sidebar-link-badge">{badge || 'New'}</span>
                   )}
@@ -69,7 +71,7 @@ export default function DashboardSidebar({
 
       <div className="sidebar-footer">
         <button id="logout-btn" className="sidebar-logout" onClick={logout}>
-          <span>↩</span> Sign Out
+          <LogOut size={16} /> Sign Out
         </button>
       </div>
     </aside>

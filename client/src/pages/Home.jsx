@@ -1,6 +1,28 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import ContactForm from '../components/ContactForm'
 import '../styles/home.css'
+import { 
+  Flower2, 
+  ScrollText, 
+  HandPlatter, 
+  Sprout, 
+  Music, 
+  HeartHandshake,
+  Bird,
+  BookOpen,
+  HandHeart,
+  Leaf,
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Sparkles,
+  Heart,
+  Send,
+  Calendar,
+  FileText
+} from 'lucide-react'
 
 /* ── Animated Counter ─────────────────────────────────── */
 function AnimCounter({ target, suffix = '', duration = 2000 }) {
@@ -79,44 +101,52 @@ export default function Home() {
   const navigate = useNavigate()
   const [selectedTier, setSelectedTier] = useState(1)
 
+  const stats = [
+    { target: 29, suffix: '+', label: 'Years of Service', icon: <Calendar size={24} /> },
+    { target: 12480, suffix: '+', label: 'Lives Touched', icon: <Heart size={24} /> },
+    { target: 1540, suffix: '+', label: 'Daily Meals Served', icon: <HandPlatter size={24} /> },
+    { target: 12, suffix: '', label: 'Seva Programs', icon: <Flower2 size={24} /> },
+  ]
+
   const programs = [
     {
-      icon: '🧘',
+      icon: <Flower2 size={24} />,
       title: 'Spiritual Retreats',
       desc: 'Immersive meditation and yoga programs rooted in ancient Vedic traditions. Open to seekers of all backgrounds.',
       tags: ['Daily Satsang', 'Yoga', 'Meditation'],
     },
     {
-      icon: '📚',
+      icon: <ScrollText size={24} />,
       title: 'Vedic Education',
       desc: 'Gurukul-style learning for children and adults — Sanskrit, scriptures, and life values in a nurturing environment.',
       tags: ['Sanskrit', 'Scriptures', 'Values'],
     },
     {
-      icon: '🍱',
+      icon: <HandPlatter size={24} />,
       title: 'Annadanam',
       desc: 'Free daily meals (prasad) served to hundreds of devotees, pilgrims, and those in need — a sacred act of giving.',
       tags: ['Daily', 'Free', 'For All'],
     },
     {
-      icon: '🌿',
+      icon: <Sprout size={24} />,
       title: 'Ayurvedic Healing',
       desc: 'Traditional herbal remedies, panchakarma therapies and wellness consultations by experienced practitioners.',
       tags: ['Herbal', 'Panchakarma', 'Wellness'],
     },
     {
-      icon: '🎵',
+      icon: <Music size={24} />,
       title: 'Cultural Programs',
       desc: 'Devotional music, classical dance, and festivals celebrating India\'s rich spiritual and artistic heritage.',
       tags: ['Bhajans', 'Dance', 'Festivals'],
     },
     {
-      icon: '🤝',
+      icon: <HeartHandshake size={24} />,
       title: 'Community Service',
       desc: 'Healthcare camps, rural education drives, and women empowerment initiatives across nearby villages.',
       tags: ['Healthcare', 'Education', 'Women'],
     },
   ]
+
 
   const testimonials = [
     {
@@ -189,8 +219,20 @@ export default function Home() {
     { img: '/gallery_annadanam.png', caption: 'Annadanam Seva' },
   ]
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scroll = window.scrollY
+      const heroImg = document.querySelector('.hero-bg img')
+      if (heroImg) {
+        heroImg.style.transform = `scale(1.1) translateY(${scroll * 0.3}px)`
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <div className="home-page">
+    <div className="home-page" style={{ paddingTop: '116px' }}>
 
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="hero-section">
@@ -204,6 +246,53 @@ export default function Home() {
         </div>
 
         <div className="hero-content">
+          {/* Celestial Aura & Zen Ripples */}
+          <div className="hero-aura-layer">
+            <div className="hero-aura-source" />
+            
+            {/* Zen Ripples (Synchronized with 12s Aura Pulse) */}
+            <div className="zen-ripple-container">
+              <div className="zen-ripple" style={{ animationDelay: '0s' }} />
+              <div className="zen-ripple" style={{ animationDelay: '12s' }} />
+              <div className="zen-ripple" style={{ animationDelay: '24s' }} />
+            </div>
+
+            {/* Aura Particles (+40% Density & Size - Slower Drift) */}
+            {[...Array(34)].map((_, i) => (
+              <div 
+                key={i}
+                className="aura-particle"
+                style={{
+                  width: Math.random() * 6 + 3 + 'px',
+                  height: Math.random() * 6 + 3 + 'px',
+                  left: Math.random() * 100 + '%',
+                  top: Math.random() * 100 + '%',
+                  animation: `shimmering ${Math.random() * 4 + 3}s ease-in-out infinite ${Math.random() * 5}s, drifting ${Math.random() * 15 + 20}s linear infinite`,
+                  opacity: Math.random() * 0.5 + 0.3
+                }}
+              />
+            ))}
+          </div>
+
+          <Reveal delay={0.2}>
+            <div className="hero-logo-box" style={{ marginBottom: '2rem' }}>
+              <img 
+                src="/logo.png" 
+                alt="Sai Tapovan Logo" 
+                style={{ 
+                  width: 120, 
+                  height: 120, 
+                  objectFit: 'cover', 
+                  borderRadius: '50%',
+                  clipPath: 'circle(48%)',
+                  filter: 'drop-shadow(0 0 52px rgba(249, 115, 22, 0.95))',
+                  animation: 'float 6s ease-in-out infinite',
+                  display: 'block'
+                }} 
+              />
+            </div>
+          </Reveal>
+
           <div className="hero-badge">
             <div className="hero-badge-dot" />
             Ubhari Foundation · 80G/12A Registered
@@ -223,10 +312,10 @@ export default function Home() {
             Come, find your path to inner peace and spiritual growth.
           </p>
 
-          <div className="hero-actions">
-            <button className="btn-primary" onClick={() => navigate('/programs')}>
-              🌸 Explore Programs
-            </button>
+            <div className="hero-actions">
+              <button className="btn-primary" onClick={() => navigate('/programs')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Sparkles size={18} /> Explore Programs
+              </button>
             <button className="btn-outline" onClick={() => navigate('/about')}>
               Learn Our Story
             </button>
@@ -244,13 +333,9 @@ export default function Home() {
       {/* ── STATS STRIP ──────────────────────────────────── */}
       <div className="stats-strip">
         <div className="stats-strip-inner">
-          {[
-            { target: 29, suffix: '+', label: 'Years of Service' },
-            { target: 50000, suffix: '+', label: 'Lives Touched' },
-            { target: 500, suffix: '+', label: 'Daily Meals Served' },
-            { target: 12, suffix: '', label: 'Seva Programs' },
-          ].map(({ target, suffix, label }) => (
+          {stats.map(({ target, suffix, label, icon }) => (
             <div key={label} className="stat-item">
+              <div className="stat-icon-wrap">{icon}</div>
               <div className="stat-number">
                 <AnimCounter target={target} suffix={suffix} />
               </div>
@@ -293,10 +378,10 @@ export default function Home() {
 
               <div className="about-pillars">
                 {[
-                  { icon: '🕊️', label: 'Peace & Harmony' },
-                  { icon: '📖', label: 'Vedic Knowledge' },
-                  { icon: '🤲', label: 'Selfless Service' },
-                  { icon: '🌿', label: 'Holistic Wellness' },
+                  { icon: <Bird size={20} />, label: 'Peace & Harmony' },
+                  { icon: <BookOpen size={20} />, label: 'Vedic Knowledge' },
+                  { icon: <HandHeart size={20} />, label: 'Selfless Service' },
+                  { icon: <Leaf size={20} />, label: 'Holistic Wellness' },
                 ].map(({ icon, label }) => (
                   <div key={label} className="pillar-item">
                     <span className="pillar-icon">{icon}</span>
@@ -384,8 +469,8 @@ export default function Home() {
             </div>
 
             <div className="hero-actions">
-              <button className="btn-primary" onClick={() => navigate('/donate')}>
-                🙏 Donate Now · {donationTiers[selectedTier].amount}
+              <button className="btn-primary" onClick={() => navigate('/donate')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <HandHeart size={18} /> Donate Now · {donationTiers[selectedTier].amount}
               </button>
               <button className="btn-outline" onClick={() => navigate('/donate')}>
                 Custom Amount
@@ -489,8 +574,8 @@ export default function Home() {
                   <div className="event-info">
                     <div className="event-name">{name}</div>
                     <div className="event-meta">
-                      <span>📍 {location}</span>
-                      <span>🕐 {time}</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><MapPin size={14} /> {location}</span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Clock size={14} /> {time}</span>
                     </div>
                   </div>
                   <span className="event-tag">{tag}</span>
@@ -535,7 +620,7 @@ export default function Home() {
           <Reveal delay={0.2}>
             <div style={{ marginTop: 48, padding: 32, borderRadius: 16, background: 'rgba(255,255,255,0.02)', border: '1px dashed var(--border-subtle)', textAlign: 'center' }}>
               <div style={{ color: 'var(--text-secondary)', fontSize: 14 }}>
-                📑 Annual Audit Reports and 80G Certificates are available for all donors upon request.
+                <FileText size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6 }} />Annual Audit Reports and 80G Certificates are available for all donors upon request.
                 <Link to="/contact" style={{ color: 'var(--gold-400)', marginLeft: 8, textDecoration: 'underline' }}>Request Documents</Link>
               </div>
             </div>
@@ -593,10 +678,10 @@ export default function Home() {
 
               <div className="contact-details">
                 {[
-                  { icon: '📍', label: 'Address', value: '78CV+38, Asole, Maharashtra 421401' },
-                  { icon: '📞', label: 'Phone', value: '+91 97636 49611' },
-                  { icon: '✉️', label: 'Email', value: 'info@ubharifoundation.org' },
-                  { icon: '🕐', label: 'Darshan Hours', value: 'Daily · 5:30 AM – 8:30 PM' },
+                  { icon: <MapPin size={18} />, label: 'Address', value: '78CV+38, Asole, Maharashtra 421401' },
+                  { icon: <Phone size={18} />, label: 'Phone', value: '+91 97636 49611' },
+                  { icon: <Mail size={18} />, label: 'Email', value: 'info@ubharifoundation.org' },
+                  { icon: <Clock size={18} />, label: 'Darshan Hours', value: 'Daily · 5:30 AM – 8:30 PM' },
                 ].map(({ icon, label, value }) => (
                   <div key={label} className="contact-detail-item">
                     <div className="contact-detail-icon">{icon}</div>
@@ -621,71 +706,16 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── FLOATING SEVA BUTTON ─────────────────────────── */}
+      <div className="floating-seva-btn" onClick={() => navigate('/donate')}>
+        <div className="fab-inner">
+          <HandHeart size={24} />
+          <span className="fab-text">Quick Seva</span>
+        </div>
+        <div className="fab-ripple" />
+      </div>
+
     </div>
   )
 }
 
-/* ── Contact Form ──────────────────────────────────────── */
-function ContactForm() {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
-  const [sent, setSent] = useState(false)
-  const [sending, setSending] = useState(false)
-
-  const handleChange = (e) =>
-    setForm((p) => ({ ...p, [e.target.name]: e.target.value }))
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setSending(true)
-    await new Promise((r) => setTimeout(r, 1400))
-    setSent(true)
-    setSending(false)
-  }
-
-  if (sent) {
-    return (
-      <div style={{ textAlign: 'center', padding: '40px 0' }}>
-        <div style={{ fontSize: 48, marginBottom: 16 }}>🙏</div>
-        <h4 style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: 'var(--text-primary)', marginBottom: 8 }}>
-          Jai Sai Ram!
-        </h4>
-        <p style={{ color: 'var(--text-muted)', fontSize: 15 }}>
-          Your message has been received. We will get back to you within 24 hours.
-        </p>
-      </div>
-    )
-  }
-
-  return (
-    <form className="contact-form" onSubmit={handleSubmit}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-        <div className="form-field">
-          <label>Full Name</label>
-          <input name="name" type="text" placeholder="Your name" value={form.name} onChange={handleChange} required />
-        </div>
-        <div className="form-field">
-          <label>Email</label>
-          <input name="email" type="email" placeholder="you@example.com" value={form.email} onChange={handleChange} required />
-        </div>
-      </div>
-      <div className="form-field">
-        <label>Subject</label>
-        <select name="subject" value={form.subject} onChange={handleChange} required>
-          <option value="">Select a subject</option>
-          <option>Spiritual Retreat Enquiry</option>
-          <option>Donation & Sponsorship</option>
-          <option>Volunteer Opportunity</option>
-          <option>Program Registration</option>
-          <option>General Enquiry</option>
-        </select>
-      </div>
-      <div className="form-field">
-        <label>Message</label>
-        <textarea name="message" placeholder="Write your message here..." value={form.message} onChange={handleChange} required />
-      </div>
-      <button type="submit" className="btn-primary" disabled={sending} style={{ width: '100%', justifyContent: 'center' }}>
-        {sending ? <span className="spinner" /> : '🪷 Send Message'}
-      </button>
-    </form>
-  )
-}

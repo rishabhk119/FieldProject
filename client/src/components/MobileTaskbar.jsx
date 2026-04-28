@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
+import { Home, Flower2, HeartHandshake, User } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import '../styles/mobile-taskbar.css'
 
@@ -9,10 +10,10 @@ export default function MobileTaskbar() {
   const isActive = (path) => location.pathname === path
 
   const navItems = [
-    { label: 'Home', icon: '🏠', path: '/' },
-    { label: 'Seva', icon: '🧘', path: '/seva' },
-    { label: 'Donate', icon: '🙏', path: '/donate' },
-    { label: 'Account', icon: '👤', path: isAuthenticated ? '/dashboard' : '/login' },
+    { label: 'Home', icon: <Home size={20} />, path: '/' },
+    { label: 'Seva', icon: <Flower2 size={20} />, path: '/seva' },
+    { label: 'Donate', icon: <HeartHandshake size={20} />, path: '/donate' },
+    { label: 'Account', icon: <User size={20} />, path: isAuthenticated ? '/dashboard' : '/login' },
   ]
 
   return (

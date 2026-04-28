@@ -1,7 +1,7 @@
 /* ── Navbar ─────────────────────────────────────────────── */
 .navbar {
   position: fixed;
-  top: 0;
+  top: 44px; /* Offset for Mantra Ticker */
   left: 0;
   right: 0;
   z-index: 1000;
@@ -185,7 +185,7 @@
 .mobile-menu {
   display: none;
   position: fixed;
-  top: 72px;
+  top: 116px; /* 72px navbar + 44px ticker */
   left: 0;
   right: 0;
   background: rgba(10, 8, 3, 0.97);
@@ -219,4 +219,47 @@
 
 @media (max-width: 480px) {
   .navbar-login { display: none; }
+}
+
+/* ── MANTRA TICKER FIXED ────────────────────────────────── */
+.mantra-ticker-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--dark-950);
+  border-bottom: 1px solid var(--border-subtle);
+  height: 44px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1100;
+}
+
+.mantra-track {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker-slide 60s linear infinite;
+  gap: 20px;
+}
+
+.mantra-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--gold-400);
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.mantra-sep {
+  color: var(--saffron-500);
+  opacity: 0.6;
+}
+
+@keyframes ticker-slide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }

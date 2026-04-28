@@ -1,11 +1,22 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { 
+  LayoutDashboard, IndianRupee, Users, Megaphone, Calendar, 
+  Image as ImageIcon, BookOpen, User as UserIcon, Settings, 
+  ShieldCheck, FileText, Target, HandHeart, ClipboardList, Flower2, Sprout, ShieldAlert 
+} from 'lucide-react'
 import { getDashboardStats, getRecentActivity } from '../api/dashboard.api'
 import { getMyDonations, downloadReceipt } from '../api/donations.api'
+import { getCampaigns } from '../api/admin.api'
 import Loader from '../components/Loader'
 import DashboardSidebar from '../components/DashboardSidebar'
 import DashboardTopbar from '../components/DashboardTopbar'
+import AdminUsers from '../components/admin/AdminUsers'
+import AdminDonations from '../components/admin/AdminDonations'
+import AdminContacts from '../components/admin/AdminContacts'
+import AdminAnalytics from '../components/admin/AdminAnalytics'
+import AdminGodMode from '../components/admin/AdminGodMode'
 import '../styles/dashboard.css'
 
 const ROLE_CONFIG = {
@@ -18,35 +29,48 @@ const NAV_SECTIONS = [
   {
     label: 'Main',
     links: [
-      { id: 'overview', icon: '🏠', label: 'Overview' },
-      { id: 'donations', icon: '💰', label: 'Donations', badge: '' },
-      { id: 'volunteers', icon: '🤝', label: 'Volunteers' },
-      { id: 'campaigns', icon: '📣', label: 'Campaigns' },
+      { id: 'overview', icon: <LayoutDashboard size={18} />, label: 'Overview' },
+      { id: 'donations', icon: <IndianRupee size={18} />, label: 'Donations', badge: '' },
+      { id: 'volunteers', icon: <Users size={18} />, label: 'Volunteers' },
+      { id: 'campaigns', icon: <Megaphone size={18} />, label: 'Campaigns' },
     ],
   },
   {
     label: 'Ashram',
     links: [
-      { id: 'events', icon: '📅', label: 'Events' },
-      { id: 'gallery', icon: '🖼️', label: 'Gallery' },
-      { id: 'programs', icon: '📚', label: 'Programs' },
+      { id: 'events', icon: <Calendar size={18} />, label: 'Events' },
+      { id: 'gallery', icon: <ImageIcon size={18} />, label: 'Gallery' },
+      { id: 'programs', icon: <BookOpen size={18} />, label: 'Programs' },
     ],
   },
   {
     label: 'Account',
     links: [
-      { id: 'profile', icon: '👤', label: 'Profile' },
-      { id: 'settings', icon: '⚙️', label: 'Settings' },
+      { id: 'profile', icon: <UserIcon size={18} />, label: 'Profile' },
+      { id: 'settings', icon: <Settings size={18} />, label: 'Settings' },
     ],
   },
   {
     label: 'Legal',
     links: [
-      { id: 'privacy', icon: '🔒', label: 'Privacy Policy', path: '/privacy-policy' },
-      { id: 'terms', icon: '📝', label: 'Terms of Use', path: '/terms' },
-      { id: 'refund', icon: '💰', label: 'Refund Policy', path: '/refund-policy' },
+      { id: 'privacy', icon: <ShieldCheck size={18} />, label: 'Privacy Policy', path: '/privacy-policy' },
+      { id: 'terms', icon: <FileText size={18} />, label: 'Terms of Use', path: '/terms' },
+      { id: 'refund', icon: <IndianRupee size={18} />, label: 'Refund Policy', path: '/refund-policy' },
     ],
   },
+]
+
+const ADMIN_SECTIONS = [
+  {
+    label: 'Administration',
+    links: [
+      { id: 'admin-users', icon: <Users size={18} />, label: 'User Management' },
+      { id: 'admin-donations', icon: <IndianRupee size={18} />, label: 'All Donations' },
+      { id: 'admin-contacts', icon: <Megaphone size={18} />, label: 'Messages' },
+      { id: 'admin-analytics', icon: <Target size={18} />, label: 'Analytics' },
+      { id: 'admin-godmode', icon: <ShieldAlert size={18} />, label: 'System Controls' },
+    ],
+  }
 ]
 
 export default function Dashboard() {
@@ -57,6 +81,7 @@ export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null)
   const [recentActivity, setRecentActivity] = useState([])
   const [donations, setDonations] = useState([])
+  const [campaignsList, setCampaignsList] = useState([])
   const [loading, setLoading] = useState(true)
   const [loadingDonations, setLoadingDonations] = useState(false)
 
@@ -79,12 +104,14 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [statsRes, activityRes] = await Promise.all([
+        const [statsRes, activityRes, campRes] = await Promise.all([
           getDashboardStats(),
-          getRecentActivity()
+          getRecentActivity(),
+          getCampaigns()
         ])
         setDashboardData(statsRes.data.data)
         setRecentActivity(activityRes.data.data)
+        setCampaignsList(campRes.data.data)
       } catch (error) {
         console.error("Failed to load dashboard data", error)
       } finally {
@@ -102,21 +129,31 @@ export default function Dashboard() {
   const role = ROLE_CONFIG[user?.role] ?? ROLE_CONFIG.donor
 
   const stats = [
-    { icon: '💰', iconBg: 'rgba(249,115,22,0.12)', label: 'Total Donations', value: dashboardData?.totalDonations || '₹0', trend: '—', trendType: 'neutral' },
-    { icon: '🤝', iconBg: 'rgba(34,197,94,0.12)', label: 'Volunteers', value: dashboardData?.volunteers || '0', trend: '—', trendType: 'neutral' },
-    { icon: '📣', iconBg: 'rgba(99,102,241,0.12)', label: 'Active Campaigns', value: dashboardData?.activeCampaigns || '0', trend: '—', trendType: 'neutral' },
-    { icon: '🎯', iconBg: 'rgba(236,72,153,0.12)', label: 'Goals Met', value: dashboardData?.goalsMet ? `${dashboardData.goalsMet}%` : '0%', trend: '—', trendType: 'neutral' },
+    { icon: <IndianRupee size={22} />, iconBg: 'rgba(249,115,22,0.12)', label: 'Total Donations', value: dashboardData?.totalDonations || '₹0', trend: '—', trendType: 'neutral' },
+    { icon: <Users size={22} />, iconBg: 'rgba(34,197,94,0.12)', label: 'Volunteers', value: dashboardData?.volunteers || '0', trend: '—', trendType: 'neutral' },
+    { icon: <Megaphone size={22} />, iconBg: 'rgba(99,102,241,0.12)', label: 'Active Campaigns', value: dashboardData?.activeCampaigns || '0', trend: '—', trendType: 'neutral' },
+    { icon: <Target size={22} />, iconBg: 'rgba(236,72,153,0.12)', label: 'Goals Met', value: dashboardData?.goalsMet ? `${dashboardData.goalsMet}%` : '0%', trend: '—', trendType: 'neutral' },
   ]
 
   const quickActions = [
-    { icon: '🙏', label: 'Make Donation', action: () => navigate('/donate') },
-    { icon: '📋', label: 'Public Events', action: () => navigate('/events') },
-    { icon: '🤝', label: 'Volunteer', action: () => setActiveSection('volunteers') },
-    { icon: '📖', label: 'Ashram Programs', action: () => navigate('/programs') },
+    { icon: <HandHeart size={20} />, label: 'Make Donation', action: () => navigate('/donate') },
+    { icon: <ClipboardList size={20} />, label: 'Public Events', action: () => navigate('/events') },
+    { icon: <Users size={20} />, label: 'Volunteer', action: () => setActiveSection('volunteers') },
+    { icon: <BookOpen size={20} />, label: 'Ashram Programs', action: () => navigate('/programs') },
   ]
 
   const renderContent = () => {
     switch (activeSection) {
+      case 'admin-users':
+        return <AdminUsers />
+      case 'admin-donations':
+        return <AdminDonations />
+      case 'admin-contacts':
+        return <AdminContacts />
+      case 'admin-analytics':
+        return <AdminAnalytics />
+      case 'admin-godmode':
+        return <AdminGodMode />
       case 'donations':
         return (
           <div className="dash-card" style={{ animation: 'fade-in 0.4s ease' }}>
@@ -150,10 +187,10 @@ export default function Dashboard() {
                             {d.status === 'completed' && (
                               <button 
                                 className="btn-primary" 
-                                style={{ fontSize: 11, padding: '6px 14px' }}
+                                style={{ fontSize: 11, padding: '6px 14px', display: 'flex', alignItems: 'center', gap: '6px' }}
                                 onClick={() => downloadReceipt(d._id)}
                               >
-                                📄 Receipt
+                                <FileText size={12} /> Receipt
                               </button>
                             )}
                           </td>
@@ -180,15 +217,37 @@ export default function Dashboard() {
       case 'campaigns':
         return (
           <div className="dash-card">
-            <div className="dash-card-header"><span className="dash-card-title">Active Campaigns</span></div>
+            <div className="dash-card-header">
+              <span className="dash-card-title">Active Campaigns</span>
+              <button className="dash-card-action">View All</button>
+            </div>
             <div className="dash-card-body">
-              <div style={{ display: 'grid', gap: 20 }}>
-                {['Rural Water Project', 'Vedic School Expansion'].map(c => (
-                  <div key={c} className="glass-card" style={{ padding: 20, border: '1px solid var(--border-subtle)' }}>
-                    <h4 style={{ color: 'var(--saffron-400)', marginBottom: 8 }}>{c}</h4>
-                    <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Status: Fundraising · Milestone: 65%</p>
-                  </div>
-                ))}
+              <div style={{ display: 'grid', gap: 24 }}>
+                {campaignsList.length === 0 ? (
+                  <p style={{ color: 'var(--text-muted)' }}>No active campaigns at the moment.</p>
+                ) : campaignsList.map(c => {
+                  const percent = Math.min(Math.round((c.raised / c.goal) * 100), 100)
+                  return (
+                    <div key={c._id} className="glass-card" style={{ padding: 24, border: '1px solid var(--border-subtle)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                        <h4 style={{ color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 8, fontSize: 16 }}>
+                          <Sprout size={16} /> {c.name}
+                        </h4>
+                        <span style={{ fontSize: 13, fontWeight: 700, color: c.color }}>{percent}%</span>
+                      </div>
+                      
+                      {/* Progress Bar */}
+                      <div style={{ height: 6, background: 'rgba(255,255,255,0.05)', borderRadius: 3, overflow: 'hidden', marginBottom: 16 }}>
+                        <div style={{ width: `${percent}%`, height: '100%', background: c.color, borderRadius: 3, boxShadow: `0 0 12px ${c.color}66` }} />
+                      </div>
+
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--text-muted)' }}>
+                        <span>Raised: ₹{c.raised.toLocaleString()}</span>
+                        <span>Goal: ₹{c.goal.toLocaleString()}</span>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -307,22 +366,24 @@ export default function Dashboard() {
 
   if (loading) return <Loader fullScreen={true} text="Awakening Dashboard..." />
 
+  const sections = user?.role === 'admin' ? [...ADMIN_SECTIONS, ...NAV_SECTIONS] : NAV_SECTIONS
+
   return (
     <div className="dashboard-layout">
       <DashboardSidebar 
         user={user} role={role} logout={handleLogout}
         activeSection={activeSection} setActiveSection={setActiveSection}
-        NAV_SECTIONS={NAV_SECTIONS}
+        NAV_SECTIONS={sections}
       />
       <main className="dash-main">
-        <DashboardTopbar user={user} activeSection={activeSection} NAV_SECTIONS={NAV_SECTIONS} />
+        <DashboardTopbar user={user} activeSection={activeSection} NAV_SECTIONS={sections} />
         <div className="dash-content">
           <div className="dash-welcome-banner">
             <div className="dash-welcome-text">
-              <h2>{user ? `Jai Sai Ram, ${user.name.split(' ')[0]} 🙏` : 'Jai Sai Ram, Guest 🙏'}</h2>
+              <h2>{user ? `Jai Sai Ram, ${user.name.split(' ')[0]} ` : 'Jai Sai Ram, Guest '}</h2>
               <p>{user ? 'Welcome back to your Ashram portal.' : 'Welcome to the Sai Tapovan Ashram public portal.'}</p>
             </div>
-            <div className="dash-welcome-emoji">🪷</div>
+            <div className="dash-welcome-emoji"><Flower2 size={48} color="var(--saffron-500)" /></div>
           </div>
           {renderContent()}
         </div>

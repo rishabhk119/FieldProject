@@ -8,12 +8,14 @@ const api = axios.create({
 
 // Remove token interceptor entirely as we now use HttpOnly cookies
 
-// Handle 401 globally — clear auth state and redirect to login if not already there
+// Handle 401 globally — only redirect from protected routes (dashboard)
 api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response?.status === 401) {
-      if (window.location.pathname !== '/login' && window.location.pathname !== '/') {
+      const path = window.location.pathname
+      // Only redirect if user is on a protected route, not public pages
+      if (path.startsWith('/dashboard')) {
         window.location.href = '/login'
       }
     }
