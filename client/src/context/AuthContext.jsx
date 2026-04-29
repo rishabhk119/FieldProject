@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { getMe } from '../api/auth.api'
+import { getMe, logoutUser } from '../api/auth.api'
 
 const AuthContext = createContext(null)
 
@@ -28,7 +28,6 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     try {
-      const { logoutUser } = await import('../api/auth.api')
       await logoutUser()
     } catch (e) {
       // Ignore errors on logout

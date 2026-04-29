@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Send, Heart } from 'lucide-react'
+import { submitContact } from '../api/contact.api'
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
@@ -13,7 +14,6 @@ export default function ContactForm() {
     e.preventDefault()
     setSending(true)
     try {
-      const { submitContact } = await import('../api/contact.api')
       await submitContact(form)
       setSent(true)
     } catch (err) {
