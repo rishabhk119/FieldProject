@@ -33,11 +33,8 @@ const isLanOrigin = (origin) => {
 app.use(
   cors({
     origin: (origin, callback) => {
-      // allow requests with no origin (e.g. Postman)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin) || isLanOrigin(origin))
-        return callback(null, true);
-      callback(new Error("Not allowed by CORS"));
+      // Allow any origin
+      return callback(null, true);
     },
     credentials: true,
   })
